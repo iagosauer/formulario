@@ -25,17 +25,26 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<TextInputFormatter> inputFormatter;
+    if (data) {
+      inputFormatter = [
+        FilteringTextInputFormatter.digitsOnly,
+        DataInputFormatter()
+      ];
+    } else if (inteiro) {
+      inputFormatter = [
+        FilteringTextInputFormatter.digitsOnly,
+      ];
+    } else {
+      inputFormatter = [];
+    }
+
     return Row(
       children: [
         SizedBox(
           width: MediaQuery.of(context).size.width - 40,
           child: TextFormField(
-            inputFormatters: inteiro == false
-                ? null
-                : [
-                    FilteringTextInputFormatter.digitsOnly,
-                    if (data) DataInputFormatter()
-                  ],
+            inputFormatters: inputFormatter,
             decoration: InputDecoration(
               labelText: labelHint,
               label: textoInicial == null ? null : Text(textoInicial!),
@@ -55,9 +64,3 @@ class CustomTextField extends StatelessWidget {
     );
   }
 }
-
-/*An InputDecorator, which is typically created by a TextField, cannot have an unbounded width.\nThis
-happens when the parent widget does not provide a finite width constraint. For example, if the
-InputDecorator is contained by a Row, then its width must be constrained. An Expanded widget or a
-SizedBox can be used to constrain the width of the InputDecorator or the TextField that contains
-it."*/

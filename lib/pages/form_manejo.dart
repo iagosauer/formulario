@@ -2,21 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:forms/widgets/text_field.dart';
 
+import '../widgets/botao_cadastrar.dart';
 import '../widgets/drop_down_button.dart';
 import '../widgets/text_label.dart';
 import '../widgets/valores.dart';
+import 'classes/controladores.dart';
 
 class FormManejo extends StatelessWidget {
   String title;
-  final controlerDate = TextEditingController();
-  final controlerFazenda = ValueNotifier('');
-  final controlerTipo = ValueNotifier('');
-  final controlerFinalidade = ValueNotifier('');
-  final controlerEntradaSaida = ValueNotifier('');
-  final controlerMotivo = ValueNotifier('');
-  final controlerIdade = TextEditingController();
-  final controlerSexo = ValueNotifier('');
-  final controlerQuantidade = TextEditingController();
+  Controladores controladores = Controladores();
 
   List<String> ListaPropriedades = <String>[
     'Fazenda Barão',
@@ -56,7 +50,7 @@ class FormManejo extends StatelessWidget {
             children: [
               CustomTextLabel(texto: 'Data'),
               CustomTextField(
-                controler: controlerDate,
+                controler: controladores.controlerDate,
                 labelHint: 'Data',
                 icon: Icons.calendar_month,
                 data: true,
@@ -64,36 +58,36 @@ class FormManejo extends StatelessWidget {
               CustomTextLabel(texto: 'Propriedade'),
               CustomDropDownButtonForm(
                 list: ListaPropriedades,
-                controler: controlerFazenda,
+                controler: controladores.controlerFazenda,
                 icon: Icons.home,
               ),
               CustomTextLabel(texto: 'Tipo Pecuária'),
               CustomDropDownButtonForm(
                 list: ListaTipoPecuaria,
-                controler: controlerTipo,
+                controler: controladores.controlerTipo,
                 icon: Icons.pets,
               ),
               CustomTextLabel(texto: 'Finalidade'),
               CustomDropDownButtonForm(
                 list: ListaFinalidade,
-                controler: controlerFinalidade,
+                controler: controladores.controlerFinalidade,
                 icon: Icons.list,
               ),
               CustomTextLabel(texto: 'Tipo E/S'),
               CustomDropDownButtonForm(
                 list: ListaEntradaSaida,
-                controler: controlerEntradaSaida,
+                controler: controladores.controlerEntradaSaida,
                 icon: Icons.transit_enterexit,
               ),
               CustomTextLabel(texto: 'Motivo'),
               CustomDropDownButtonForm(
                 list: ListaMotivos,
-                controler: controlerMotivo,
+                controler: controladores.controlerMotivo,
                 icon: Icons.abc,
               ),
               CustomTextLabel(texto: 'Idade (meses)'),
               CustomTextField(
-                controler: controlerIdade,
+                controler: controladores.controlerIdade,
                 labelHint: 'Idade',
                 icon: Icons.calendar_view_month,
                 inteiro: true,
@@ -101,30 +95,20 @@ class FormManejo extends StatelessWidget {
               CustomTextLabel(texto: 'Sexo'),
               CustomDropDownButtonForm(
                 list: ListaSexo,
-                controler: controlerSexo,
+                controler: controladores.controlerSexo,
                 icon: Icons.male,
               ),
               CustomTextLabel(texto: 'Quantidade'),
               CustomTextField(
-                controler: controlerQuantidade,
+                controler: controladores.controlerQuantidade,
                 labelHint: 'Quantidade',
                 icon: Icons.numbers,
                 inteiro: true,
               ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(Valor.radiusCircular),
-                  ),
-                ),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      textStyle: const TextStyle(fontSize: 20)),
-                  onPressed: () {},
-                  child: const Text('Enabled'),
-                ),
+              const SizedBox(
+                height: Valor.distancia,
               ),
+              CustomBotaoCadastrar(controladores: controladores),
             ],
           ),
         ),
