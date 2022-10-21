@@ -4,6 +4,7 @@ import 'package:forms/widgets/text_field.dart';
 
 import '../widgets/botao_cadastrar.dart';
 import '../widgets/drop_down_button.dart';
+import '../widgets/drop_down_button_Entrada_Saida.dart';
 import '../widgets/text_label.dart';
 import '../widgets/valores.dart';
 import 'classes/controladores.dart';
@@ -33,6 +34,7 @@ class FormManejo extends StatelessWidget {
     'Morte',
     'Abate'
   ];
+
   List<String> ListaSexo = <String>['Macho', 'Fêmea'];
 
   FormManejo({Key? key, this.title: ''}) : super(key: key);
@@ -80,11 +82,21 @@ class FormManejo extends StatelessWidget {
                 icon: Icons.transit_enterexit,
               ),
               CustomTextLabel(texto: 'Motivo'),
-              CustomDropDownButtonForm(
-                list: ListaMotivos,
-                controler: controladores.controlerMotivo,
-                icon: Icons.abc,
-              ),
+              ValueListenableBuilder<String>(
+                  valueListenable: controladores.controlerEntradaSaida,
+                  builder: (context, entraSaida, _) {
+                    if (entraSaida == 'Entrada') {
+                      ListaMotivos = ListaMotivosEntrada;
+                    } else {
+                      ListaMotivos = ListaMotivosSaida;
+                    }
+                    controladores.controlerMotivo.value = ListaMotivos[0];
+                    return CustomDropDownButtonForm(
+                      list: ListaMotivos,
+                      controler: controladores.controlerMotivo,
+                      icon: Icons.abc,
+                    );
+                  }),
               CustomTextLabel(texto: 'Idade (meses)'),
               CustomTextField(
                 controler: controladores.controlerIdade,
