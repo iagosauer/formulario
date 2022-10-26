@@ -33,24 +33,27 @@ class _FormManejoState extends State<FormManejo> {
     setState(() {
       carregando = true;
     });
-    repositoryPecuaria.fetchPecuaria().then(
-      (value) {
-        ListaTipoPecuaria.clear();
-        ListaTipoPecuaria = value.map((e) => e.descricao).toList();
-      },
-    );
-    repositoryPropriedade.fetchProprietario().then(
-      (value) {
-        ListaPropriedades.clear();
-        ListaPropriedades = value.map((e) => e.nome).toList();
-        setState(
-          () {
-            print('aqui');
-            carregando = false;
-          },
-        );
-      },
-    );
+    try {
+      repositoryPecuaria.fetchPecuaria().then(
+        (value) {
+          ListaTipoPecuaria.clear();
+          ListaTipoPecuaria = value.map((e) => e.descricao).toList();
+        },
+      );
+      repositoryPropriedade.fetchProprietario().then(
+        (value) {
+          ListaPropriedades.clear();
+          ListaPropriedades = value.map((e) => e.nome).toList();
+          setState(
+            () {
+              carregando = false;
+            },
+          );
+        },
+      );
+    } catch (erro) {
+      print('Erro: ${erro.toString()}');
+    }
   }
 
   List<String> ListaFinalidade = <String>['Corte', 'Leiteira'];

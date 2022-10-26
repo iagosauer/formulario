@@ -1,17 +1,21 @@
-import 'package:dio/dio.dart';
+import 'package:http/http.dart' as http;
 import 'package:forms/widgets/valores.dart';
 import '../models/pecuaria_model.dart';
+import 'dart:convert' as convert;
 
 class PecuariaRepository {
-  final dio = Dio();
-  final baseUrl = Valor.baseUrl;
+  final baseUrl = Uri.http(Valor.baseUrl, '/tipo_pecuaria');
 
   Future<List<PecuariaModel>> fetchPecuaria() async {
-    print('aqui');
-    final response = await dio.get('$baseUrl/tipo_pecuaria');
-    final lista = response.data as List;
-    print('aqui de novo');
-    print(lista);
-    return lista.map((e) => PecuariaModel.fromMap(e)).toList();
+    try {
+      final response = await http.get(baseUrl);
+      var jsonResponse =
+          convert.jsonDecode(response.body) as Map<String, dynamic>;
+      final lista = jsonResponse as List;
+
+      return lista.map((e) => PecuariaModel.fromMap(e)).toList();
+    } catch (e) {
+      throw Exception(e);
+    }
   }
 }
