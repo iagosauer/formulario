@@ -4,12 +4,16 @@ import 'package:forms/widgets/valores.dart';
 import 'dart:convert' as convert;
 
 class PropriedadeRepository {
-  final baseUrl = Uri.http(Valor.baseUrl, '/propriedade');
+  //final baseUrl = Uri.http(Valor.baseUrl, '/v1/propriedade');
   var lista;
 
   Future<List<PropriedadeModel>> fetchProprietario() async {
     try {
-      final response = await http.get(baseUrl);
+      final response =
+          await http.get(Uri.parse('${Valor.baseUrl}/v1/propriedade'));
+
+      /*await http
+          .get(baseUrl, headers: {"Content-Type": "application/json"});*/
       if (response.statusCode == 200) {
         var jsonResponse =
             convert.jsonDecode(response.body) as Map<String, dynamic>;
