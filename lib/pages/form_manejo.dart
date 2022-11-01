@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:forms/models/propriedade_model.dart';
 import 'package:forms/widgets/text_field.dart';
@@ -21,38 +23,39 @@ class FormManejo extends StatefulWidget {
 class _FormManejoState extends State<FormManejo> {
   Controladores controladores = Controladores();
   bool carregando = false;
+  bool erro = false;
 
   final repositoryPropriedade = PropriedadeRepository();
   final repositoryPecuaria = PecuariaRepository();
-  List<String> ListaPropriedades = <String>[];
-  List<String> ListaTipoPecuaria = <String>[];
+  var listaPropriedades = <String>[];
+  var listaTipoPecuaria = <String>[];
 
   @override
   initState() {
     super.initState();
-    setState(() {
-      carregando = true;
-    });
+    _buscarDados();
+  }
+
+  Future _buscarDados() async {
     try {
-      repositoryPecuaria.fetchPecuaria().then(
-        (value) {
-          ListaTipoPecuaria.clear();
-          ListaTipoPecuaria = value.map((e) => e.descricao).toList();
-        },
-      );
-      repositoryPropriedade.fetchProprietario().then(
-        (value) {
-          ListaPropriedades.clear();
-          ListaPropriedades = value.map((e) => e.nome).toList();
-          setState(
-            () {
-              carregando = false;
-            },
-          );
-        },
-      );
-    } catch (erro) {
-      print('Erro: ${erro.toString()}');
+      setState(() {
+        carregando = true;
+      });
+      final lista = await repositoryPecuaria.fetchPecuaria();
+      listaTipoPecuaria.clear();
+      listaTipoPecuaria = lista.map((e) => e.descricao).toList();
+      final lista2 = await repositoryPropriedade.fetchProprietario();
+      listaPropriedades.clear();
+      listaPropriedades = lista2.map((e) => e.nome).toList();
+      setState(() {
+        carregando = false;
+      });
+    } catch (e) {
+      setState(() {
+        erro = true;
+        carregando = false;
+      });
+      log('Erro: ${e.toString()}');
     }
   }
 
@@ -78,6 +81,18 @@ class _FormManejoState extends State<FormManejo> {
 
   List<String> ListaSexo = <String>['Macho', 'Fêmea'];
 
+  _buildErro() {
+    return const Center(
+      child: Text(
+        'Erro ao carregar dados!',
+        style: TextStyle(
+          color: Colors.red,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,7 +101,9 @@ class _FormManejoState extends State<FormManejo> {
       ),
       body: carregando
           ? const Center(child: CircularProgressIndicator())
-          : _Sucesso(),
+          : erro
+              ? _buildErro()
+              : _Sucesso(),
     );
   }
 
@@ -105,13 +122,13 @@ class _FormManejoState extends State<FormManejo> {
             ),
             CustomTextLabel(texto: 'Propriedade'),
             CustomDropDownButtonForm(
-              list: ListaPropriedades,
+              list: listaPropriedades,
               controler: controladores.controlerFazenda,
               icon: Icons.home,
             ),
             CustomTextLabel(texto: 'Tipo Pecuária'),
             CustomDropDownButtonForm(
-              list: ListaTipoPecuaria,
+              list: listaTipoPecuaria,
               controler: controladores.controlerTipo,
               icon: Icons.pets,
             ),
@@ -182,11 +199,11 @@ class _FormManejoState extends State<FormManejo> {
                   builder: (context, snapShot) {
                     if (snapShot.hasData &&
                         snapShot.connectionState == ConnectionState.done) {
-                      ListaPropriedades.clear();
-                      ListaPropriedades =
+                      listaPropriedades.clear();
+                      listaPropriedades =
                           snapShot.data!.map((e) => e.nome).toList();
                       return CustomDropDownButtonForm(
-                        list: ListaPropriedades,
+                        list: listaPropriedades,
                         controler: controladores.controlerFazenda,
                         icon: Icons.home,
                       );
