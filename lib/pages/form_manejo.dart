@@ -1,6 +1,8 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:forms/models/pecuaria_model.dart';
+import 'package:forms/models/propriedade_model.dart';
 import 'package:forms/widgets/text_field.dart';
 import '../repositories/pecuaria_repository.dart';
 import '../repositories/propriedade_repository.dart';
@@ -26,8 +28,8 @@ class _FormManejoState extends State<FormManejo> {
 
   final repositoryPropriedade = PropriedadeRepository();
   final repositoryPecuaria = PecuariaRepository();
-  var listaPropriedades = <String>[];
-  var listaTipoPecuaria = <String>[];
+  var listaPropriedades = <PropriedadeModel>[];
+  var listaTipoPecuaria = <PecuariaModel>[];
 
   @override
   initState() {
@@ -40,12 +42,8 @@ class _FormManejoState extends State<FormManejo> {
       setState(() {
         carregando = true;
       });
-      final lista = await repositoryPecuaria.fetchPecuaria();
-      listaTipoPecuaria.clear();
-      listaTipoPecuaria = lista.map((e) => e.descricao).toList();
-      final lista2 = await repositoryPropriedade.fetchProprietario();
-      listaPropriedades.clear();
-      listaPropriedades = lista2.map((e) => e.nome).toList();
+      listaTipoPecuaria = await repositoryPecuaria.fetchPecuaria();
+      listaPropriedades =await repositoryPropriedade.fetchProprietario();
       setState(() {
         carregando = false;
       });
@@ -120,13 +118,13 @@ class _FormManejoState extends State<FormManejo> {
               data: true,
             ),
             CustomTextLabel(texto: 'Propriedade'),
-            CustomDropDownButtonForm(
+            CustomDropDownButtonForm<PropriedadeModel>(
               list: listaPropriedades,
               controler: controladores.controlerFazenda,
               icon: Icons.home,
             ),
             CustomTextLabel(texto: 'Tipo Pecuária'),
-            CustomDropDownButtonForm(
+            CustomDropDownButtonForm<PecuariaModel>(
               list: listaTipoPecuaria,
               controler: controladores.controlerTipo,
               icon: Icons.pets,

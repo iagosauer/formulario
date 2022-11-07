@@ -1,9 +1,14 @@
 // ignore_for_file: no_logic_in_create_state
+import 'dart:js_util';
+
 import 'package:flutter/material.dart';
 import 'package:forms/widgets/valores.dart';
 
-class CustomDropDownButtonForm extends StatelessWidget {
-  List<String> list;
+import '../models/pecuaria_model.dart';
+import '../models/propriedade_model.dart';
+
+class CustomDropDownButtonForm<T> extends StatelessWidget {
+  List<T> list;
   String? labelUp;
   IconData? icon;
   bool habilitado;
@@ -18,13 +23,13 @@ class CustomDropDownButtonForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String dropdownValue = list.first;
+    T dropdownValue = list.first;
     controler.value = dropdownValue;
     return Row(
       children: [
         SizedBox(
           width: MediaQuery.of(context).size.width - 40,
-          child: DropdownButtonFormField<String>(
+          child: DropdownButtonFormField<T>(
             value: dropdownValue,
             icon: const Icon(Icons.arrow_downward),
             isExpanded: true,
@@ -36,15 +41,30 @@ class CustomDropDownButtonForm extends StatelessWidget {
               prefixIcon: icon == null ? null : Icon(icon),
               enabled: habilitado,
             ),
-            onChanged: (String? value) {
+            onChanged: (T? value) {
               dropdownValue = value!;
               controler.value = dropdownValue;
             },
-            items: list.map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
+
+            items: list.map<DropdownMenuItem<T>>((T value) {
+              var texto = '';
+              if(value is String)
+              {
+                texto = value;
+              }
+              if(value is PecuariaModel)
+              {
+                texto = value.descricao;
+              }
+              if(value is PropriedadeModel)
+              {
+                texto = value.nome;
+              }
+
+              return DropdownMenuItem<T>(
                 value: value,
                 child: SizedBox(
-                  child: Text(value, textAlign: TextAlign.center),
+                  child: Text(texto, textAlign: TextAlign.center),
                 ),
               );
             }).toList(),

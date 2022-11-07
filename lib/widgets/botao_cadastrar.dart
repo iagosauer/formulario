@@ -48,11 +48,11 @@ class CustomBotaoCadastrar extends StatelessWidget {
               codFinalidade: 1, //controladores.controlerFinalidade.value,
               idade: int.parse(controladores.controlerIdade.text),
               motivos: controladores.controlerMotivo.value,
-              codTipoPecuaria: 1, // controladores.controlerTipo.value,
-              codPropriedade:1, // controladores.controlerFazenda.value,
+              codTipoPecuaria: controladores.controlerTipo.value.codigo,
+              codPropriedade: controladores.controlerFazenda.value.codigo,
               quantidade: int.parse(controladores.controlerQuantidade.text),
               sexo: controladores.controlerSexo.value,
-              tipoOperacao: controladores.controlerTipo.value, codigo: 1, propriedadeDestino: 1);
+              tipoOperacao: controladores.controlerEntradaSaida.value, codigo: 1, propriedadeDestino: 1);
               final valor = await const JanelaDialog(mensagem: 'Tem certeza que deseja cadastrar o Manejo ?', mensagemTrue: 'Sim', mensagemFalse: 'Não').build(context);
               if(valor)
               {
