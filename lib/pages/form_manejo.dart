@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:forms/models/propriedade_model.dart';
 import 'package:forms/widgets/text_field.dart';
 import '../repositories/pecuaria_repository.dart';
 import '../repositories/propriedade_repository.dart';
@@ -190,8 +189,6 @@ class _FormManejoState extends State<FormManejo> {
     );
   }
 }
-
-
 
 /*
                 FutureBuilder<List<ProrpiedadeModel>>(
