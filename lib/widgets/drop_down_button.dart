@@ -1,9 +1,7 @@
 // ignore_for_file: no_logic_in_create_state
-import 'dart:js_util';
-
 import 'package:flutter/material.dart';
-import 'package:forms/widgets/valores.dart';
-
+import 'package:forms/models/finalidade_model.dart';
+import 'package:forms/Auxiliares/valores.dart';
 import '../models/pecuaria_model.dart';
 import '../models/propriedade_model.dart';
 
@@ -45,20 +43,16 @@ class CustomDropDownButtonForm<T> extends StatelessWidget {
               dropdownValue = value!;
               controler.value = dropdownValue;
             },
-
             items: list.map<DropdownMenuItem<T>>((T value) {
               var texto = '';
-              if(value is String)
-              {
+              if (value is String) {
                 texto = value;
-              }
-              if(value is PecuariaModel)
-              {
+              } else if (value is PecuariaModel) {
                 texto = value.descricao;
-              }
-              if(value is PropriedadeModel)
-              {
+              } else if (value is PropriedadeModel) {
                 texto = value.nome;
+              } else if (value is FinalidadeModel) {
+                texto = value.descricao;
               }
 
               return DropdownMenuItem<T>(

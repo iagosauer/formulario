@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/services.dart';
-import 'package:forms/widgets/valores.dart';
+import 'package:forms/Auxiliares/valores.dart';
 
 class CustomTextField extends StatelessWidget {
   TextEditingController controler;

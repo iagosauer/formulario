@@ -1,6 +1,6 @@
 // ignore_for_file: no_logic_in_create_state
 import 'package:flutter/material.dart';
-import 'package:forms/widgets/valores.dart';
+import 'package:forms/Auxiliares/valores.dart';
 
 class CustomDropDownButtonFormEntradaSaida extends StatefulWidget {
   List<String> list;

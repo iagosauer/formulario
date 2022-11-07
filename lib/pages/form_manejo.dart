@@ -1,15 +1,17 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:forms/models/finalidade_model.dart';
 import 'package:forms/models/pecuaria_model.dart';
 import 'package:forms/models/propriedade_model.dart';
+import 'package:forms/repositories/finalidade_repository.dart';
 import 'package:forms/widgets/text_field.dart';
 import '../repositories/pecuaria_repository.dart';
 import '../repositories/propriedade_repository.dart';
 import '../widgets/botao_cadastrar.dart';
 import '../widgets/drop_down_button.dart';
 import '../widgets/text_label.dart';
-import '../widgets/valores.dart';
+import '../Auxiliares/valores.dart';
 import 'classes/controladores.dart';
 
 class FormManejo extends StatefulWidget {
@@ -28,8 +30,10 @@ class _FormManejoState extends State<FormManejo> {
 
   final repositoryPropriedade = PropriedadeRepository();
   final repositoryPecuaria = PecuariaRepository();
+  final repositoryFinalidade = FinalidadeRepository();
   var listaPropriedades = <PropriedadeModel>[];
   var listaTipoPecuaria = <PecuariaModel>[];
+  var listaFinalidade = <FinalidadeModel>[];
 
   @override
   initState() {
@@ -43,7 +47,8 @@ class _FormManejoState extends State<FormManejo> {
         carregando = true;
       });
       listaTipoPecuaria = await repositoryPecuaria.fetchPecuaria();
-      listaPropriedades =await repositoryPropriedade.fetchProprietario();
+      listaPropriedades = await repositoryPropriedade.fetchProprietario();
+      listaFinalidade = await repositoryFinalidade.fetchFinalidade();
       setState(() {
         carregando = false;
       });
@@ -55,8 +60,6 @@ class _FormManejoState extends State<FormManejo> {
       log('Erro: ${e.toString()}');
     }
   }
-
-  List<String> ListaFinalidade = <String>['Corte', 'Leiteira'];
 
   List<String> ListaEntradaSaida = <String>['Entrada', 'Saida'];
 
@@ -131,7 +134,7 @@ class _FormManejoState extends State<FormManejo> {
             ),
             CustomTextLabel(texto: 'Finalidade'),
             CustomDropDownButtonForm(
-              list: ListaFinalidade,
+              list: listaFinalidade,
               controler: controladores.controlerFinalidade,
               icon: Icons.list,
             ),

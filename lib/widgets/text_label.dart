@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:forms/widgets/valores.dart';
+import 'package:forms/Auxiliares/valores.dart';
 
 class CustomTextLabel extends StatelessWidget {
   String texto;
