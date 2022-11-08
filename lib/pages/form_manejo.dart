@@ -13,6 +13,7 @@ import '../widgets/drop_down_button.dart';
 import '../widgets/text_label.dart';
 import '../Auxiliares/valores.dart';
 import 'classes/controladores.dart';
+import 'package:brasil_fields/brasil_fields.dart';
 
 class FormManejo extends StatefulWidget {
   String title;
@@ -116,7 +117,6 @@ class _FormManejoState extends State<FormManejo> {
             CustomTextLabel(texto: 'Data'),
             CustomTextField(
               controler: controladores.controlerDate,
-              labelHint: 'Data',
               icon: Icons.calendar_month,
               data: true,
             ),

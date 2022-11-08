@@ -5,7 +5,7 @@ import 'package:forms/Auxiliares/valores.dart';
 
 class CustomTextField extends StatelessWidget {
   TextEditingController controler;
-  String labelHint;
+  String? labelHint;
   bool habilitado;
   IconData? icon;
   bool data;
@@ -15,7 +15,7 @@ class CustomTextField extends StatelessWidget {
   CustomTextField(
       {Key? key,
       required this.controler,
-      required this.labelHint,
+      this.labelHint,
       this.habilitado: true,
       this.icon,
       this.data: false,
@@ -46,8 +46,8 @@ class CustomTextField extends StatelessWidget {
           child: TextFormField(
             inputFormatters: inputFormatter,
             decoration: InputDecoration(
-              labelText: labelHint,
-              label: textoInicial == null ? null : Text(textoInicial!),
+              labelText: labelHint ?? null,
+              //label: textoInicial == null ? null : Text(textoInicial!),
               border: const OutlineInputBorder(
                   borderRadius:
                       BorderRadius.all(Radius.circular(Valor.radiusCircular))),

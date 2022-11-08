@@ -1,13 +1,11 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:forms/Auxiliares/Utils.dart';
 import 'package:forms/models/manejo_model.dart';
 import 'package:forms/repositories/manejo_repository.dart';
 import 'package:forms/widgets/janelaDialog.dart';
 import 'package:forms/Auxiliares/valores.dart';
-
-import '../pages/classes/classe_manejo.dart';
+import 'package:brasil_fields/brasil_fields.dart';
 import '../pages/classes/controladores.dart';
 
 class CustomBotaoCadastrar extends StatelessWidget {
@@ -43,8 +41,10 @@ class CustomBotaoCadastrar extends StatelessWidget {
             ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
         onPressed: () async {
           try {
-            var data = Utils()
-                .ConverteDataStringParaDate(controladores.controlerDate.text);
+            var data = UtilData.obterDateTime(controladores.controlerDate.text)
+                .toString();
+            DateTime.parse(data);
+            UtilData.validarData(data);
             ManejoModel manejo = ManejoModel(
                 data: data,
                 codFinalidade: 1, //controladores.controlerFinalidade.value,
@@ -66,7 +66,14 @@ class CustomBotaoCadastrar extends StatelessWidget {
               _enviarDados(manejo, context);
             }
           } catch (e) {
-            throw Exception(e);
+            var mensagemErro = e.toString();
+            if (mensagemErro.compareTo(
+                    "Expected a value of type 'String', but got one of type 'DateTime'") ==
+                0) {
+              mensagemErro = 'Data Inválida!';
+            }
+            await JanelaDialog(mensagem: mensagemErro, mensagemTrue: 'OK')
+                .build(context);
           }
         },
         child: const Text('Cadastrar'),
