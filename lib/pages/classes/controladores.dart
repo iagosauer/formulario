@@ -22,5 +22,8 @@ class Controladores {
   final controlerIdade = TextEditingController();
   final controlerSexo = ValueNotifier('');
   final controlerQuantidade = TextEditingController();
-  Controladores() {}
+  final controlerValidadorIdade = ValueNotifier(true);
+  final controlerValidadorQuantidade = ValueNotifier(true);
+  final controlerValidadorData = ValueNotifier(true);
+  Controladores();
 }

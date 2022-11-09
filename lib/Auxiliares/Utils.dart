@@ -1,13 +1,41 @@
 class Utils {
   Utils();
 
-  bool isValidDate(String date) {
+  bool dataValida(String data) {
     try {
-      DateTime.parse(date);
-      return true;
+      var dia = int.parse('${data[0]}${data[1]}');
+      var mes = int.parse('${data[3]}${data[4]}');
+      var ano = int.parse('${data[6]}${data[7]}${data[8]}${data[9]}');
+      if (!MesInValido(mes)) {
+        return false;
+      }
+      if ((dia < 0) || (dia > QtdDiasMes(mes, ano))) {
+        return false;
+      }
     } catch (e) {
-      return false;
+      throw Exception(e);
     }
+    return true;
+  }
+
+  bool MesInValido(int mes) {
+    if (0 > mes && mes < 13) {
+      return true;
+    }
+    return false;
+  }
+
+  int QtdDiasMes(int mes, int ano) {
+    var diasMeses = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    var qtdDias = diasMeses[mes - 1];
+    if ((anoBissexto(ano)) && (mes == 2)) {
+      qtdDias = 29;
+    }
+    return qtdDias;
+  }
+
+  bool anoBissexto(int ano) {
+    return ((ano % 4 == 0) && ((!(ano % 100 == 0)) || (ano % 400 == 0)));
   }
 
   String ConverteDataStringParaDate(String data) {
