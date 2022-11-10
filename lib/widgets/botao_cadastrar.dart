@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:forms/models/manejo_model.dart';
+import 'package:forms/pages/form_manejo.dart';
+import 'package:forms/pages/home_page.dart';
+import 'package:forms/repositories/codigoManejo_repository.dart';
 import 'package:forms/repositories/manejo_repository.dart';
+import 'package:forms/repositories/saldo_repository.dart';
 import 'package:forms/widgets/janelaDialog.dart';
 import 'package:forms/Auxiliares/valores.dart';
 import 'package:brasil_fields/brasil_fields.dart';
@@ -17,9 +21,11 @@ class CustomBotaoCadastrar extends StatefulWidget {
 }
 
 class _CustomBotaoCadastrarState extends State<CustomBotaoCadastrar> {
-  void _enviarDados(ManejoModel manejo, BuildContext context) async {
+  bool validador = false;
+
+  _enviarDados(ManejoModel manejo, BuildContext context) async {
     ManejoRepository manejoRepository = ManejoRepository();
-    bool retorno = await manejoRepository.fetchManejo(manejo);
+    bool retorno = true; //await manejoRepository.fetchManejo(manejo);
     if (retorno) {
       // ignore: use_build_context_synchronously
       await JanelaDialog(
@@ -32,6 +38,7 @@ class _CustomBotaoCadastrarState extends State<CustomBotaoCadastrar> {
               mensagemTrue: 'Ok')
           .build(context);
     }
+    return retorno;
   }
 
   @override
@@ -50,14 +57,22 @@ class _CustomBotaoCadastrarState extends State<CustomBotaoCadastrar> {
           var data =
               UtilData.obterDateTime(widget.controladores.controlerDate.text)
                   .toString();
-
           if (widget.formKey.currentState!.validate()) {
+            validador = true;
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Processing Data')),
+              const SnackBar(content: Text('Processando dados!')),
             );
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                  backgroundColor: Colors.red,
+                  content: Text('Dados Incorretos!')),
+            );
+            validador = false;
           }
 
           ManejoModel manejo = ManejoModel(
+              codigo: await CodigoRepository().fetchCodigo(),
               data: data,
               codFinalidade: 1, //controladores.controlerFinalidade.value,
               idade: int.parse(widget.controladores.controlerIdade.text),
@@ -69,15 +84,36 @@ class _CustomBotaoCadastrarState extends State<CustomBotaoCadastrar> {
                   int.parse(widget.controladores.controlerQuantidade.text),
               sexo: widget.controladores.controlerSexo.value,
               tipoOperacao: widget.controladores.controlerEntradaSaida.value,
-              codigo: 1,
               propriedadeDestino: 1);
-          final valor = await JanelaDialog(
-                  mensagem: 'Tem certeza que deseja cadastrar o Manejo ?',
-                  mensagemTrue: 'Sim',
-                  mensagemFalse: 'Não')
-              .build(context);
-          if (valor) {
-            _enviarDados(manejo, context);
+          var saldo = await SaldoRepository().fetchSaldo(
+              propriedade: manejo.codPropriedade,
+              idade: manejo.idade,
+              sexo: manejo.sexo,
+              tipoPecuaria: manejo.codTipoPecuaria);
+          if ((saldo < manejo.quantidade) &&
+              (manejo.tipoOperacao.compareTo('SAIDA') == 0)) {
+            validador = false;
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                  backgroundColor: Colors.red,
+                  content: Text('O valor da quantidade está acima do saldo!')),
+            );
+          }
+          if (validador) {
+            // ignore: use_build_context_synchronously
+            final valor = await JanelaDialog(
+                    mensagem: 'Tem certeza que deseja cadastrar o Manejo ?',
+                    mensagemTrue: 'Sim',
+                    mensagemFalse: 'Não')
+                .build(context);
+            if (valor) {
+              if (await _enviarDados(manejo, context)) {
+                context
+                    .findAncestorWidgetOfExactType<FormManejo>()
+                    ?.createState()
+                    .build(context);
+              }
+            }
           }
         },
         child: const Text('Salvar'),

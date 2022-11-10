@@ -12,7 +12,6 @@ class FinalidadeRepository {
     try {
       final response = await dio.get('${Valor.baseUrl}/finalidade');
       final lista = response.data as List;
-      log(lista.toString());
       return lista.map((e) => FinalidadeModel.fromMap(e)).toList();
     } catch (e) {
       throw Exception(e);

@@ -28,7 +28,6 @@ class ManejoModel {
     required this.propriedadeDestino,
   });
 
-
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'codigo': codigo,
@@ -63,5 +62,6 @@ class ManejoModel {
 
   String toJson() => json.encode(toMap());
 
-  factory ManejoModel.fromJson(String source) => ManejoModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory ManejoModel.fromJson(String source) =>
+      ManejoModel.fromMap(json.decode(source) as Map<String, dynamic>);
 }

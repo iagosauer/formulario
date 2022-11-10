@@ -72,13 +72,6 @@ class CustomTextField extends StatelessWidget {
                 return null;
               }
             },
-            onChanged: (value) {
-              if (controler.text.compareTo('') == 0) {
-                mensagemErro = 'Valor Inválido!';
-              } else {
-                mensagemErro = '';
-              }
-            },
           ),
         ),
         const SizedBox(

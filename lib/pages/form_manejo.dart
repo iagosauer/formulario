@@ -58,11 +58,10 @@ class _FormManejoState extends State<FormManejo> {
         erro = true;
         carregando = false;
       });
-      log('Erro: ${e.toString()}');
     }
   }
 
-  List<String> ListaEntradaSaida = <String>['Entrada', 'Saida'];
+  List<String> ListaEntradaSaida = <String>['ENTRADA', 'SAIDA'];
 
   List<String> ListaMotivosEntrada = <String>['Compra', 'Nascimento'];
 
@@ -80,7 +79,7 @@ class _FormManejoState extends State<FormManejo> {
     'Abate'
   ];
 
-  List<String> ListaSexo = <String>['Macho', 'Fêmea'];
+  List<String> ListaSexo = <String>['MACHO', 'FÊMEA'];
 
   _buildErro() {
     return const Center(
@@ -151,7 +150,7 @@ class _FormManejoState extends State<FormManejo> {
               ValueListenableBuilder<String>(
                   valueListenable: controladores.controlerEntradaSaida,
                   builder: (context, entraSaida, _) {
-                    if (entraSaida == 'Entrada') {
+                    if (entraSaida == 'ENTRADA') {
                       ListaMotivos = ListaMotivosEntrada;
                     } else {
                       ListaMotivos = ListaMotivosSaida;

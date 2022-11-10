@@ -6,7 +6,7 @@ class Utils {
       var dia = int.parse('${data[0]}${data[1]}');
       var mes = int.parse('${data[3]}${data[4]}');
       var ano = int.parse('${data[6]}${data[7]}${data[8]}${data[9]}');
-      if (!MesInValido(mes)) {
+      if (!MesValida(mes)) {
         return false;
       }
       if ((dia < 0) || (dia > QtdDiasMes(mes, ano))) {
@@ -18,8 +18,8 @@ class Utils {
     return true;
   }
 
-  bool MesInValido(int mes) {
-    if (0 > mes && mes < 13) {
+  bool MesValida(int mes) {
+    if (0 < mes && mes < 13) {
       return true;
     }
     return false;
