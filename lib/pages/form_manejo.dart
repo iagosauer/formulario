@@ -6,6 +6,7 @@ import 'package:forms/models/pecuaria_model.dart';
 import 'package:forms/models/propriedade_model.dart';
 import 'package:forms/repositories/finalidade_repository.dart';
 import 'package:forms/widgets/text_field.dart';
+import '../Auxiliares/Utils.dart';
 import '../repositories/pecuaria_repository.dart';
 import '../repositories/propriedade_repository.dart';
 import '../widgets/botao_cadastrar.dart';
@@ -39,8 +40,21 @@ class _FormManejoState extends State<FormManejo> {
   @override
   initState() {
     super.initState();
+    controladores.updateScreen.addListener(
+      () => _buscarDados(),
+    );
     _buscarDados();
   }
+
+  List<String> ListaEntradaSaida = <String>[];
+
+  List<String> ListaMotivosEntrada = <String>[];
+
+  List<String> ListaMotivosSaida = <String>[];
+
+  List<String> ListaMotivos = <String>[];
+
+  List<String> ListaSexo = <String>[];
 
   Future _buscarDados() async {
     try {
@@ -59,27 +73,9 @@ class _FormManejoState extends State<FormManejo> {
         carregando = false;
       });
     }
+    _adcionaValores();
+    _reiniciaControladores();
   }
-
-  List<String> ListaEntradaSaida = <String>['ENTRADA', 'SAIDA'];
-
-  List<String> ListaMotivosEntrada = <String>['Compra', 'Nascimento'];
-
-  List<String> ListaMotivosSaida = <String>[
-    'Venda',
-    'Transferência',
-    'Morte',
-    'Abate'
-  ];
-
-  List<String> ListaMotivos = <String>[
-    'Venda',
-    'Transferência',
-    'Morte',
-    'Abate'
-  ];
-
-  List<String> ListaSexo = <String>['MACHO', 'FÊMEA'];
 
   _buildErro() {
     return const Center(
@@ -96,9 +92,19 @@ class _FormManejoState extends State<FormManejo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
+      appBar: AppBar(title: Text(widget.title), actions: <Widget>[
+        Padding(
+            padding: EdgeInsets.only(right: 20.0),
+            child: GestureDetector(
+              onTap: () {
+                _buscarDados();
+              },
+              child: Icon(
+                Icons.update,
+                size: 26.0,
+              ),
+            )),
+      ]),
       body: carregando
           ? const Center(child: CircularProgressIndicator())
           : erro
@@ -194,6 +200,42 @@ class _FormManejoState extends State<FormManejo> {
         ),
       ),
     );
+  }
+
+  void _reiniciaControladores() async {
+    controladores.controlerDate =
+        TextEditingController(text: Utils().DataHoje());
+    controladores.controlerFazenda =
+        ValueNotifier<PropriedadeModel>(PropriedadeModel(
+      codigo: 0,
+      nome: '',
+    ));
+    controladores.controlerTipo = ValueNotifier<PecuariaModel>(PecuariaModel(
+      codigo: 0,
+      descricao: '',
+    ));
+    controladores.controlerFinalidade = ValueNotifier<FinalidadeModel>(
+        FinalidadeModel(codigo: 0, descricao: ''));
+    controladores.controlerEntradaSaida = ValueNotifier('');
+    controladores.controlerMotivo = ValueNotifier('');
+    controladores.controlerIdade = TextEditingController();
+    controladores.controlerSexo = ValueNotifier('');
+    controladores.controlerQuantidade = TextEditingController();
+    controladores.controlerValidadorIdade = ValueNotifier(true);
+    controladores.controlerValidadorQuantidade = ValueNotifier(true);
+    controladores.controlerValidadorData = ValueNotifier(true);
+  }
+
+  void _adcionaValores() {
+    ListaEntradaSaida = <String>['ENTRADA', 'SAIDA'];
+
+    ListaMotivosEntrada = <String>['Compra', 'Nascimento'];
+
+    ListaMotivosSaida = <String>['Venda', 'Transferência', 'Morte', 'Abate'];
+
+    ListaMotivos = <String>['Venda', 'Transferência', 'Morte', 'Abate'];
+
+    ListaSexo = <String>['MACHO', 'FÊMEA'];
   }
 }
 

@@ -31,6 +31,7 @@ class _CustomBotaoCadastrarState extends State<CustomBotaoCadastrar> {
       await JanelaDialog(
               mensagem: 'Manejo salvo com Sucesso!', mensagemTrue: 'Ok')
           .build(context);
+      widget.controladores.updateScreen.value = true;
     } else {
       // ignore: use_build_context_synchronously
       await JanelaDialog(
