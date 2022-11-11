@@ -25,7 +25,7 @@ class _CustomBotaoCadastrarState extends State<CustomBotaoCadastrar> {
 
   _enviarDados(ManejoModel manejo, BuildContext context) async {
     ManejoRepository manejoRepository = ManejoRepository();
-    bool retorno = true; //await manejoRepository.fetchManejo(manejo);
+    bool retorno = await manejoRepository.fetchManejo(manejo);
     if (retorno) {
       // ignore: use_build_context_synchronously
       await JanelaDialog(
