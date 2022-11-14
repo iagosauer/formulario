@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/botao_login.dart';
 import '../widgets/text_fiel_login.dart';
 import '../widgets/text_field_password.dart';
+import 'form_manejo.dart';
 
 class TelaLogin extends StatelessWidget {
   final String title;
@@ -28,8 +30,9 @@ class TelaLogin extends StatelessWidget {
             ),
             CustomTextFieldPassword(),
             const SizedBox(
-              height: 40,
+              height: 10,
             ),
+            CustomBotaoLogin(),
           ],
         ),
       ),

@@ -239,25 +239,3 @@ class _FormManejoState extends State<FormManejo> {
   }
 }
 
-/*
-                FutureBuilder<List<ProrpiedadeModel>>(
-                  future: repositoryPropriedade.fetchProprietario(),
-                  builder: (context, snapShot) {
-                    if (snapShot.hasData &&
-                        snapShot.connectionState == ConnectionState.done) {
-                      listaPropriedades.clear();
-                      listaPropriedades =
-                          snapShot.data!.map((e) => e.nome).toList();
-                      return CustomDropDownButtonForm(
-                        list: listaPropriedades,
-                        controler: controladores.controlerFazenda,
-                        icon: Icons.home,
-                      );
-                    }
-                    if (snapShot.hasError) {
-                      return const Text("Erro ao buscar a propriedade");
-                    }
-                    return const Center(child: CircularProgressIndicator());
-                  }),
-
-*/
