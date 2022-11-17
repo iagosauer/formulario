@@ -22,18 +22,31 @@ class _TelaLoginState extends State<TelaLogin> {
    var list = <UsuarioModel>[];
     final respositoryUsuario = UsuarioRepository();
     ValueNotifier controler = ValueNotifier('');
+    bool carregando = false;
 
 
   @override
   initState() {
+    
     super.initState();
      _buscarDados();
   }
 
-    Future _buscarDados() async {
+  Future _buscarDados() async {
+    try {
+      setState(() {
+        carregando = true;
+      });
       list = await respositoryUsuario.fetchUsuario();
-      log(list.toString());
+      setState(() {
+        carregando = false;
+      });
+    } catch (e) {
+      setState(() {
+        carregando = false;
+      });
     }
+  }
 
   Widget build(BuildContext context) {
     return Scaffold(
