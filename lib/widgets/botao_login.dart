@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:forms/pages/form_manejo.dart';
+import 'package:forms/widgets/janelaDialog.dart';
+
+import '../repositories/usuario.repository.dart';
 
 
 
 class CustomBotaoLogin extends StatefulWidget {
 
-
+  final ValueNotifier login;
+  final TextEditingController senha;
   CustomBotaoLogin(
-      {super.key});
+      {super.key,
+      required this.login,
+      required this.senha,});
 
   @override
   State<CustomBotaoLogin> createState() => _CustomBotaoLoginState();
@@ -15,6 +21,26 @@ class CustomBotaoLogin extends StatefulWidget {
 
 class _CustomBotaoLoginState extends State<CustomBotaoLogin> {
   bool validador = false;
+ 
+
+  void _login(BuildContext context) async
+  {
+    var usuarioRepository = UsuarioRepository();
+    if(await usuarioRepository.fetchLogin(login: widget.login.value.login, senha: widget.senha.text))
+    {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => FormManejo(),
+        ),
+      );
+    }
+    else
+    { 
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Usuario ou senha incorreto'),),);
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return  Container(
@@ -58,12 +84,7 @@ class _CustomBotaoLoginState extends State<CustomBotaoLogin> {
                     ],
                   ),
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => FormManejo(),
-                      ),
-                    );
+                   _login(context);
                   },
                 ),
               ),

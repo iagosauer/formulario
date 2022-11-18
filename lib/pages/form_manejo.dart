@@ -99,7 +99,7 @@ class _FormManejoState extends State<FormManejo> {
               onTap: () {
                 _buscarDados();
               },
-              child: Icon(
+              child: const Icon(
                 Icons.update,
                 size: 26.0,
               ),
