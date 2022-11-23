@@ -227,13 +227,13 @@ class _FormManejoState extends State<FormManejo> {
   }
 
   void _adcionaValores() {
-    ListaEntradaSaida = <String>['ENTRADA', 'SAIDA'];
+    ListaEntradaSaida = <String>['ENTRADA', 'SAÍDA'];
 
-    ListaMotivosEntrada = <String>['Compra', 'Nascimento'];
+    ListaMotivosEntrada = <String>['COMPRA', 'NASCIMENTO'];
 
-    ListaMotivosSaida = <String>['Venda', 'Transferência', 'Morte', 'Abate'];
+    ListaMotivosSaida = <String>['VENDA', 'TRANSFERÊNCIA', 'MORTE', 'ABATE'];
 
-    ListaMotivos = <String>['Venda', 'Transferência', 'Morte', 'Abate'];
+    ListaMotivos = <String>['VENDA', 'TRANSFERÊNCIA', 'MORTE', 'ABATE'];
 
     ListaSexo = <String>['MACHO', 'FÊMEA'];
   }

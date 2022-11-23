@@ -92,7 +92,7 @@ class _CustomBotaoCadastrarState extends State<CustomBotaoCadastrar> {
               sexo: manejo.sexo,
               tipoPecuaria: manejo.codTipoPecuaria);
           if ((saldo < manejo.quantidade) &&
-              (manejo.tipoOperacao.compareTo('SAIDA') == 0)) {
+              (manejo.tipoOperacao.compareTo('SAÍDA') == 0)) {
             validador = false;
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
