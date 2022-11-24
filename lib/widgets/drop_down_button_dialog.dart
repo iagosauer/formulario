@@ -8,13 +8,13 @@ import 'package:forms/models/usuario_model.dart';
 import '../models/pecuaria_model.dart';
 import '../models/propriedade_model.dart';
 
-class CustomDropDownButtonForm<T> extends StatelessWidget {
+class CustomDropDownButtonDialogForm<T> extends StatelessWidget {
   List<T> list;
   String? labelUp;
   IconData? icon;
   bool habilitado;
   ValueNotifier controler;
-  CustomDropDownButtonForm(
+  CustomDropDownButtonDialogForm(
       {super.key,
       required this.list,
       this.labelUp,
@@ -29,7 +29,7 @@ class CustomDropDownButtonForm<T> extends StatelessWidget {
     return Row(
       children: [
         SizedBox(
-          width: MediaQuery.of(context).size.width - 40,
+          width: MediaQuery.of(context).size.width - 129,
           child: DropdownButtonFormField<T>(
             value: dropdownValue,
             icon: const Icon(Icons.arrow_downward),

@@ -8,13 +8,16 @@ import 'package:forms/repositories/saldo_repository.dart';
 import 'package:forms/widgets/janelaDialog.dart';
 import 'package:forms/Auxiliares/valores.dart';
 import 'package:brasil_fields/brasil_fields.dart';
+import '../models/propriedade_model.dart';
 import '../pages/classes/controladores.dart';
+import 'dialog_propriedades_destino.dart';
 
 class CustomBotaoCadastrar extends StatefulWidget {
   Controladores controladores;
   GlobalKey<FormState> formKey;
+  List<PropriedadeModel> listaPropriedades;
   CustomBotaoCadastrar(
-      {super.key, required this.controladores, required this.formKey});
+      {super.key, required this.controladores, required this.formKey, required this.listaPropriedades});
 
   @override
   State<CustomBotaoCadastrar> createState() => _CustomBotaoCadastrarState();
@@ -22,6 +25,22 @@ class CustomBotaoCadastrar extends StatefulWidget {
 
 class _CustomBotaoCadastrarState extends State<CustomBotaoCadastrar> {
   bool validador = false;
+  final ValueNotifier<PropriedadeModel> controladorDestino = ValueNotifier<PropriedadeModel>(PropriedadeModel(
+    codigo: 0,
+    nome: '',
+  ),);
+
+
+ Future _fazendaDestino( ) async
+  {
+    List<PropriedadeModel> propriedadesDestino = widget.listaPropriedades;
+      propriedadesDestino.remove(widget.controladores.controlerFazenda.value);
+      return JanelaDialogPropiedadeDestino(controlador: controladorDestino,
+      mensagem: 'Insira a propriedade do destino',
+      mensagemTrue: 'Ok',
+      mensagemFalse: 'Cancelar',
+      listaPropriedades: propriedadesDestino).build(context);
+  }
 
   _enviarDados(ManejoModel manejo, BuildContext context) async {
     ManejoRepository manejoRepository = ManejoRepository();
@@ -31,7 +50,7 @@ class _CustomBotaoCadastrarState extends State<CustomBotaoCadastrar> {
       await JanelaDialog(
               mensagem: 'Manejo salvo com Sucesso!', mensagemTrue: 'Ok')
           .build(context);
-      widget.controladores.updateScreen.value = true;
+      widget.controladores.updateScreen.value = !widget.controladores.updateScreen.value;
     } else {
       // ignore: use_build_context_synchronously
       await JanelaDialog(
@@ -75,7 +94,7 @@ class _CustomBotaoCadastrarState extends State<CustomBotaoCadastrar> {
           ManejoModel manejo = ManejoModel(
               codigo: await CodigoRepository().fetchCodigo(),
               data: data,
-              codFinalidade: 1, //controladores.controlerFinalidade.value,
+              codFinalidade: widget.controladores.controlerFinalidade.value.codigo,
               idade: int.parse(widget.controladores.controlerIdade.text),
               motivos: widget.controladores.controlerMotivo.value,
               codTipoPecuaria: widget.controladores.controlerTipo.value.codigo,
@@ -85,7 +104,7 @@ class _CustomBotaoCadastrarState extends State<CustomBotaoCadastrar> {
                   int.parse(widget.controladores.controlerQuantidade.text),
               sexo: widget.controladores.controlerSexo.value,
               tipoOperacao: widget.controladores.controlerEntradaSaida.value,
-              propriedadeDestino: 1);
+              propriedadeDestino: 0);
           var saldo = await SaldoRepository().fetchSaldo(
               propriedade: manejo.codPropriedade,
               idade: manejo.idade,
@@ -99,6 +118,14 @@ class _CustomBotaoCadastrarState extends State<CustomBotaoCadastrar> {
                   backgroundColor: Colors.red,
                   content: Text('O valor da quantidade está acima do saldo!')),
             );
+          }
+          if(manejo.motivos.compareTo('TRANSFERÊNCIA') == 0)
+          {
+            validador = await _fazendaDestino();
+            if(validador)
+            {
+              manejo.propriedadeDestino = controladorDestino.value.codigo;
+            };
           }
           if (validador) {
             // ignore: use_build_context_synchronously

@@ -10,11 +10,11 @@ class Controladores {
   var controlerFazenda = ValueNotifier<PropriedadeModel>(PropriedadeModel(
     codigo: 0,
     nome: '',
-  ));
+  ),);
   var controlerTipo = ValueNotifier<PecuariaModel>(PecuariaModel(
     codigo: 0,
     descricao: '',
-  ));
+  ),);
   var controlerFinalidade =
       ValueNotifier<FinalidadeModel>(FinalidadeModel(codigo: 0, descricao: ''));
   var controlerEntradaSaida = ValueNotifier('');
@@ -26,6 +26,10 @@ class Controladores {
   var controlerValidadorQuantidade = ValueNotifier(true);
   var controlerValidadorData = ValueNotifier(true);
   var updateScreen = ValueNotifier(false);
+  var controlerFazendaDestino = ValueNotifier<PropriedadeModel>(PropriedadeModel(
+    codigo: 0,
+    nome: '',
+  ),);
 
   Controladores();
 }

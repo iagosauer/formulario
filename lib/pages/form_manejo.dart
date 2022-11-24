@@ -5,6 +5,7 @@ import 'package:forms/models/finalidade_model.dart';
 import 'package:forms/models/pecuaria_model.dart';
 import 'package:forms/models/propriedade_model.dart';
 import 'package:forms/repositories/finalidade_repository.dart';
+import 'package:forms/widgets/dialog_propriedades_destino.dart';
 import 'package:forms/widgets/text_field.dart';
 import '../Auxiliares/Utils.dart';
 import '../repositories/pecuaria_repository.dart';
@@ -194,6 +195,7 @@ class _FormManejoState extends State<FormManejo> {
               CustomBotaoCadastrar(
                 controladores: controladores,
                 formKey: _formKey,
+                listaPropriedades: listaPropriedades,
               ),
             ],
           ),
@@ -216,6 +218,10 @@ class _FormManejoState extends State<FormManejo> {
     ));
     controladores.controlerFinalidade = ValueNotifier<FinalidadeModel>(
         FinalidadeModel(codigo: 0, descricao: ''));
+        controladores.controlerFazendaDestino = ValueNotifier<PropriedadeModel>(PropriedadeModel(
+      codigo: 0,
+      nome: '',
+    ));
     controladores.controlerEntradaSaida = ValueNotifier('');
     controladores.controlerMotivo = ValueNotifier('');
     controladores.controlerIdade = TextEditingController();

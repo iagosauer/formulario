@@ -12,7 +12,7 @@ class ManejoModel {
   final int idade;
   final String sexo;
   final int quantidade;
-  final int propriedadeDestino;
+  int propriedadeDestino;
 
   ManejoModel({
     required this.codigo,
