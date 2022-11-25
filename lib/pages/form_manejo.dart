@@ -6,6 +6,7 @@ import 'package:forms/models/pecuaria_model.dart';
 import 'package:forms/models/propriedade_model.dart';
 import 'package:forms/repositories/finalidade_repository.dart';
 import 'package:forms/widgets/dialog_propriedades_destino.dart';
+import 'package:forms/widgets/menu_appbar.dart';
 import 'package:forms/widgets/text_field.dart';
 import '../Auxiliares/Utils.dart';
 import '../repositories/pecuaria_repository.dart';
@@ -41,6 +42,9 @@ class _FormManejoState extends State<FormManejo> {
   @override
   initState() {
     super.initState();
+    controladores.selectedMenu.addListener(
+      () => _acoesDeMenu()
+       );
     controladores.updateScreen.addListener(
       () => _buscarDados(),
     );
@@ -56,6 +60,19 @@ class _FormManejoState extends State<FormManejo> {
   List<String> ListaMotivos = <String>[];
 
   List<String> ListaSexo = <String>[];
+
+  _acoesDeMenu()
+  {
+    if(controladores.selectedMenu.value == ItensDeMenu.cadastrar)
+    {
+      _buscarDados();
+    }
+    else
+    {
+
+    }
+    controladores.selectedMenu.value = ItensDeMenu.controlar;
+  }
 
   Future _buscarDados() async {
     try {
@@ -94,17 +111,7 @@ class _FormManejoState extends State<FormManejo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(widget.title), actions: <Widget>[
-        Padding(
-            padding: EdgeInsets.only(right: 20.0),
-            child: GestureDetector(
-              onTap: () {
-                _buscarDados();
-              },
-              child: const Icon(
-                Icons.update,
-                size: 26.0,
-              ),
-            )),
+      MenuAppBar(selectedMenu: controladores.selectedMenu).build(context),
       ]),
       body: carregando
           ? const Center(child: CircularProgressIndicator())

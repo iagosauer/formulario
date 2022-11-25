@@ -28,7 +28,7 @@ class _CustomBotaoLoginState extends State<CustomBotaoLogin> {
     var usuarioRepository = UsuarioRepository();
     if(await usuarioRepository.fetchLogin(login: widget.login.value.login, senha: widget.senha.text))
     {
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (context) => FormManejo(),

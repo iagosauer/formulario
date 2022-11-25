@@ -33,7 +33,7 @@ class _CustomBotaoCadastrarState extends State<CustomBotaoCadastrar> {
 
  Future _fazendaDestino( ) async
   {
-    List<PropriedadeModel> propriedadesDestino = widget.listaPropriedades;
+    List<PropriedadeModel> propriedadesDestino = widget.listaPropriedades.map((e) => e).toList();
       propriedadesDestino.remove(widget.controladores.controlerFazenda.value);
       return JanelaDialogPropiedadeDestino(controlador: controladorDestino,
       mensagem: 'Insira a propriedade do destino',
@@ -119,7 +119,7 @@ class _CustomBotaoCadastrarState extends State<CustomBotaoCadastrar> {
                   content: Text('O valor da quantidade está acima do saldo!')),
             );
           }
-          if(manejo.motivos.compareTo('TRANSFERÊNCIA') == 0)
+          if((manejo.motivos.compareTo('TRANSFERÊNCIA') == 0) && validador)
           {
             validador = await _fazendaDestino();
             if(validador)
