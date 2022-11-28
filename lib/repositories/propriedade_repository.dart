@@ -14,4 +14,14 @@ class PropriedadeRepository {
       throw Exception(e);
     }
   }
+
+  Future<PropriedadeModel> fetchPropriedade(String numero) async {
+    try {
+      final response = await dio.get('${Valor.baseUrl}/propriedade/$numero');
+      final retorno = response.data;
+      return retorno;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
 }

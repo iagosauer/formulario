@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:forms/Auxiliares/valores.dart';
 import 'package:forms/models/manejo_model.dart';
+import 'package:forms/models/propriedade_model.dart';
 import 'package:forms/pages/classes/navegacao.dart';
 import 'package:forms/repositories/manejo_repository.dart';
+import 'package:forms/repositories/propriedade_repository.dart';
 import 'package:forms/widgets/menu_appbar.dart';
 
 class ListaManejos extends StatefulWidget {
@@ -15,8 +17,9 @@ class ListaManejos extends StatefulWidget {
 }
 
 class _ListaManejosState extends State<ListaManejos> {
-  late ValueNotifier<ItensDeMenu> selectedMenu = ValueNotifier(ItensDeMenu.controlar);
-  late List <CustomListItem> listaCustomItem;
+  late ValueNotifier<ItensDeMenu> selectedMenu =
+      ValueNotifier(ItensDeMenu.controlar);
+  late List<CustomListItem> listaCustomItens;
   late bool carregando;
   var listaManejo = <ManejoModel>[];
   final ManejoRepository _manejoRepository = ManejoRepository();
@@ -26,16 +29,23 @@ class _ListaManejosState extends State<ListaManejos> {
     _buscarDados();
   }
 
-
   Future _buscarDados() async {
     try {
       setState(() {
         carregando = true;
       });
       listaManejo = await _manejoRepository.fetchTodosManejos();
-      for(int i = 0; i<listaManejo.length; i++){
+      for (int i = 0; i < listaManejo.length; i++) {
+        PropriedadeModel propriedade = await PropriedadeRepository()
+            .fetchPropriedade(listaManejo[i].codPropriedade.toString());
+        listaCustomItens.add(CustomListItem(
+          data: listaManejo[i].data,
+          propriedade: listaManejo[i].data,
+          thumbnail: Container(child: Image.asset(Valor.pathSuina)),
+          codigo: '1',
+          tipoES: 'Saída',
+        ));
         listaManejo[i];
-
       }
 
       setState(() {
@@ -51,13 +61,14 @@ class _ListaManejosState extends State<ListaManejos> {
 
   @override
   Widget build(BuildContext context) {
-    selectedMenu.addListener( () => Navegacao(selectedMenu, context).acoesDeMenu());
+    selectedMenu
+        .addListener(() => Navegacao(selectedMenu, context).acoesDeMenu());
     return MaterialApp(
       title: ListaManejos._title,
       home: Scaffold(
         appBar: AppBar(title: Text(ListaManejos._title), actions: <Widget>[
-      MenuAppBar(selectedMenu: selectedMenu).build(context),
-      ]),
+          MenuAppBar(selectedMenu: selectedMenu).build(context),
+        ]),
         body: const MyStatelessWidget(),
       ),
     );
@@ -111,12 +122,11 @@ class CustomListItem extends StatelessWidget {
 }
 
 class _ManejoDescricao extends StatelessWidget {
-  const _ManejoDescricao({
-    required this.title,
-    required this.data,
-    required this.propriedade,
-    required this.tipoES
-  });
+  const _ManejoDescricao(
+      {required this.title,
+      required this.data,
+      required this.propriedade,
+      required this.tipoES});
 
   final String title;
   final String data;
@@ -170,18 +180,14 @@ class MyStatelessWidget extends StatelessWidget {
         CustomListItem(
           data: '28/11/2022',
           propriedade: 'Fazenda Principio',
-          thumbnail: Container(
-           child: Image.asset(Valor.pathSuina)
-          ),
+          thumbnail: Container(child: Image.asset(Valor.pathSuina)),
           codigo: '1',
           tipoES: 'Saída',
         ),
         CustomListItem(
           data: '28/10/2022',
           propriedade: 'Fazenda Recanto',
-          thumbnail: Container(
-          child: Image.asset(Valor.pathBovino)
-          ),
+          thumbnail: Container(child: Image.asset(Valor.pathBovino)),
           codigo: '2',
           tipoES: 'Entrada',
         ),
