@@ -1,11 +1,10 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:forms/models/finalidade_model.dart';
 import 'package:forms/models/pecuaria_model.dart';
 import 'package:forms/models/propriedade_model.dart';
+import 'package:forms/pages/classes/navegacao.dart';
+import 'package:forms/pages/lista_manejos.dart';
 import 'package:forms/repositories/finalidade_repository.dart';
-import 'package:forms/widgets/dialog_propriedades_destino.dart';
 import 'package:forms/widgets/menu_appbar.dart';
 import 'package:forms/widgets/text_field.dart';
 import '../Auxiliares/Utils.dart';
@@ -43,7 +42,7 @@ class _FormManejoState extends State<FormManejo> {
   initState() {
     super.initState();
     controladores.selectedMenu.addListener(
-      () => _acoesDeMenu()
+      () => Navegacao(controladores.selectedMenu, context).acoesDeMenu()
        );
     controladores.updateScreen.addListener(
       () => _buscarDados(),
@@ -63,15 +62,23 @@ class _FormManejoState extends State<FormManejo> {
 
   _acoesDeMenu()
   {
+    bool x = true;
     if(controladores.selectedMenu.value == ItensDeMenu.cadastrar)
     {
       _buscarDados();
     }
     else
     {
-
+      x = false;
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const ListaManejos(),
+        ),
+      );
     }
-    controladores.selectedMenu.value = ItensDeMenu.controlar;
+    x ? controladores.selectedMenu.value = ItensDeMenu.controlar : null ;
+    
   }
 
   Future _buscarDados() async {

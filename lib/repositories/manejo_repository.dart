@@ -17,4 +17,14 @@ class ManejoRepository {
       throw Exception(e);
     }
   }
+  Future<List<ManejoModel>> fetchTodosManejos() async {
+    try {
+      final response = await dio.get('${Valor.baseUrl}/manejo');
+      final lista = response.data as List;
+      return lista.map((e) => ManejoModel.fromMap(e)).toList();
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
 }
