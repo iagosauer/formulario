@@ -14,4 +14,16 @@ class PecuariaRepository {
       throw Exception(e);
     }
   }
+
+    Future<PecuariaModel> fetchUmaPecuaria(String valor) async {
+    try {
+      final response = await dio.get('${Valor.baseUrl}/tipo_pecuaria/$valor');
+      //final retorno =  response.data as PecuariaModel;
+      final retorno = PecuariaModel.fromMap(response.data);
+      return retorno;
+    } catch (e) {
+      print(e);
+      throw Exception(e);
+    }
+  }
 }

@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:forms/models/manejo_model.dart';
 import 'package:forms/Auxiliares/valores.dart';
+import 'package:forms/models/manejo_recebe_model.dart';
 import '../models/pecuaria_model.dart';
 import 'package:dio/dio.dart';
 
@@ -17,11 +18,12 @@ class ManejoRepository {
       throw Exception(e);
     }
   }
-  Future<List<ManejoModel>> fetchTodosManejos() async {
+
+  Future<List<ManejoRecebeModel>> fetchTodosManejos() async {
     try {
-      final response = await dio.get('${Valor.baseUrl}/manejo');
+      final response = await dio.get('${Valor.baseUrl}/manejo?total=100');
       final lista = response.data as List;
-      return lista.map((e) => ManejoModel.fromMap(e)).toList();
+      return lista.map((e) => ManejoRecebeModel.fromMap(e)).toList();
     } catch (e) {
       throw Exception(e);
     }

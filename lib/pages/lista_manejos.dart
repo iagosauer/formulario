@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:forms/Auxiliares/valores.dart';
-import 'package:forms/models/manejo_model.dart';
-import 'package:forms/models/propriedade_model.dart';
+import 'package:forms/models/manejo_recebe_model.dart';
+import 'package:forms/models/pecuaria_model.dart';
 import 'package:forms/pages/classes/navegacao.dart';
 import 'package:forms/repositories/manejo_repository.dart';
-import 'package:forms/repositories/propriedade_repository.dart';
+import 'package:forms/repositories/pecuaria_repository.dart';
 import 'package:forms/widgets/menu_appbar.dart';
 
 class ListaManejos extends StatefulWidget {
@@ -19,14 +19,51 @@ class ListaManejos extends StatefulWidget {
 class _ListaManejosState extends State<ListaManejos> {
   late ValueNotifier<ItensDeMenu> selectedMenu =
       ValueNotifier(ItensDeMenu.controlar);
-  late List<CustomListItem> listaCustomItens;
-  late bool carregando;
-  var listaManejo = <ManejoModel>[];
-  final ManejoRepository _manejoRepository = ManejoRepository();
+  late List<CustomListItem> listaCustomItens = <CustomListItem>[];
+  bool carregando = false;
+  bool erro = false;
+  var listaManejo = <ManejoRecebeModel>[];
+  final _manejoRepository = ManejoRepository();
 
   @override
   initState() {
+    super.initState();
     _buscarDados();
+  }
+
+  String pathAnimal(String pecuaria)
+  {
+    String retorno;
+    if(pecuaria.compareTo('AVICULTURA')==0)
+    {
+      retorno = Valor.pathAvicultura;
+    }
+    else if(pecuaria.compareTo('SUÍNA')==0)
+    {
+      retorno = Valor.pathSuina;
+    }
+    else if(pecuaria.compareTo('OVINA')==0)
+    {
+      retorno = Valor.pathOvina;
+    }
+    else if(pecuaria.compareTo('EQUINA')==0)
+    {
+      retorno = Valor.pathEquina;
+    }
+    else if(pecuaria.compareTo('BUFALINA')==0)
+    {
+      retorno = Valor.pathBufalina;
+    }
+    else if(pecuaria.compareTo('AQUICULTURA')==0)
+    {
+      retorno = Valor.pathAquicultura;
+    }
+    else 
+    {
+      retorno = Valor.pathBovino;
+    }
+
+    return retorno;
   }
 
   Future _buscarDados() async {
@@ -34,30 +71,44 @@ class _ListaManejosState extends State<ListaManejos> {
       setState(() {
         carregando = true;
       });
+      PecuariaRepository pecuariaRepository = PecuariaRepository();
       listaManejo = await _manejoRepository.fetchTodosManejos();
       for (int i = 0; i < listaManejo.length; i++) {
-        PropriedadeModel propriedade = await PropriedadeRepository()
-            .fetchPropriedade(listaManejo[i].codPropriedade.toString());
+
+        PecuariaModel pecuaria = await pecuariaRepository.fetchUmaPecuaria(listaManejo[i].codTipoPecuaria.toString());
+        String pathImagem = pathAnimal(pecuaria.descricao);
         listaCustomItens.add(CustomListItem(
-          data: listaManejo[i].data,
-          propriedade: listaManejo[i].data,
-          thumbnail: Container(child: Image.asset(Valor.pathSuina)),
-          codigo: '1',
-          tipoES: 'Saída',
+          data: listaManejo[i].data!,
+          propriedade: listaManejo[i].codPropriedade!,
+          thumbnail: Container(child: Image.asset(pathImagem)),
+          codigo: listaManejo[i].codigo.toString(),
+          tipoES: listaManejo[i].tipoOperacao!,
         ));
-        listaManejo[i];
       }
 
       setState(() {
-        //carregando = false;
+        carregando = false;
       });
     } catch (e) {
       setState(() {
-        //erro = true;
-        //carregando = false;
+        erro = true;
+        carregando = false;
       });
     }
   }
+
+    _buildErro() {
+    return const Center(
+      child: Text(
+        'Erro ao carregar dados!',
+        style: TextStyle(
+          color: Colors.red,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +120,11 @@ class _ListaManejosState extends State<ListaManejos> {
         appBar: AppBar(title: Text(ListaManejos._title), actions: <Widget>[
           MenuAppBar(selectedMenu: selectedMenu).build(context),
         ]),
-        body: const MyStatelessWidget(),
+        body: carregando 
+        ? const Center(child: CircularProgressIndicator())
+          : erro
+          ? _buildErro()
+         : MyStatelessWidget(listaCustomItens: listaCustomItens),
       ),
     );
   }
@@ -94,7 +149,7 @@ class CustomListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5.0),
+      padding: const EdgeInsets.symmetric(vertical: 10.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -110,10 +165,6 @@ class CustomListItem extends StatelessWidget {
               propriedade: propriedade,
               tipoES: tipoES,
             ),
-          ),
-          const Icon(
-            Icons.more_vert,
-            size: 16.0,
           ),
         ],
       ),
@@ -137,61 +188,50 @@ class _ManejoDescricao extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(5.0, 0.0, 0.0, 0.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            title,
-            style: const TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 14.0,
+      child: Container(
+        decoration: const BoxDecoration(),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              title,
+              style: const TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: 14.0,
+              ),
             ),
-          ),
-          const Padding(padding: EdgeInsets.symmetric(vertical: 2.0)),
-          Text(
-            'Data: $data',
-            style: const TextStyle(fontSize: 15.0),
-          ),
-          const Padding(padding: EdgeInsets.symmetric(vertical: 1.0)),
-          Text(
-            propriedade,
-            style: const TextStyle(fontSize: 10.0),
-          ),
-          const Padding(padding: EdgeInsets.symmetric(vertical: 1.0)),
-          Text(
-            tipoES,
-            style: const TextStyle(fontSize: 10.0),
-          )
-        ],
+            const Padding(padding: EdgeInsets.symmetric(vertical: 2.0)),
+            Text(
+              'Data: $data',
+              style: const TextStyle(fontSize: 15.0),
+            ),
+            const Padding(padding: EdgeInsets.symmetric(vertical: 1.0)),
+            Text(
+              propriedade,
+              style: const TextStyle(fontSize: 10.0),
+            ),
+            const Padding(padding: EdgeInsets.symmetric(vertical: 1.0)),
+            Text(
+              tipoES,
+              style: const TextStyle(fontSize: 10.0),
+            )
+          ],
+        ),
       ),
     );
   }
 }
 
 class MyStatelessWidget extends StatelessWidget {
-  const MyStatelessWidget({super.key});
+  final List<CustomListItem> listaCustomItens;
+  const MyStatelessWidget({super.key, required this.listaCustomItens});
 
   @override
   Widget build(BuildContext context) {
     return ListView(
       padding: const EdgeInsets.all(8.0),
       itemExtent: 106.0,
-      children: <CustomListItem>[
-        CustomListItem(
-          data: '28/11/2022',
-          propriedade: 'Fazenda Principio',
-          thumbnail: Container(child: Image.asset(Valor.pathSuina)),
-          codigo: '1',
-          tipoES: 'Saída',
-        ),
-        CustomListItem(
-          data: '28/10/2022',
-          propriedade: 'Fazenda Recanto',
-          thumbnail: Container(child: Image.asset(Valor.pathBovino)),
-          codigo: '2',
-          tipoES: 'Entrada',
-        ),
-      ],
+      children: listaCustomItens,
     );
   }
 }
