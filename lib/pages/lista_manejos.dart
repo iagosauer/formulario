@@ -31,35 +31,21 @@ class _ListaManejosState extends State<ListaManejos> {
     _buscarDados();
   }
 
-  String pathAnimal(String pecuaria)
-  {
+  String pathAnimal(String pecuaria) {
     String retorno;
-    if(pecuaria.compareTo('AVICULTURA')==0)
-    {
+    if (pecuaria.compareTo('AVICULTURA') == 0) {
       retorno = Valor.pathAvicultura;
-    }
-    else if(pecuaria.compareTo('SUÍNA')==0)
-    {
+    } else if (pecuaria.compareTo('SUÍNA') == 0) {
       retorno = Valor.pathSuina;
-    }
-    else if(pecuaria.compareTo('OVINA')==0)
-    {
+    } else if (pecuaria.compareTo('OVINA') == 0) {
       retorno = Valor.pathOvina;
-    }
-    else if(pecuaria.compareTo('EQUINA')==0)
-    {
+    } else if (pecuaria.compareTo('EQUINA') == 0) {
       retorno = Valor.pathEquina;
-    }
-    else if(pecuaria.compareTo('BUFALINA')==0)
-    {
+    } else if (pecuaria.compareTo('BUFALINA') == 0) {
       retorno = Valor.pathBufalina;
-    }
-    else if(pecuaria.compareTo('AQUICULTURA')==0)
-    {
+    } else if (pecuaria.compareTo('AQUICULTURA') == 0) {
       retorno = Valor.pathAquicultura;
-    }
-    else 
-    {
+    } else {
       retorno = Valor.pathBovino;
     }
 
@@ -74,13 +60,13 @@ class _ListaManejosState extends State<ListaManejos> {
       PecuariaRepository pecuariaRepository = PecuariaRepository();
       listaManejo = await _manejoRepository.fetchTodosManejos();
       for (int i = 0; i < listaManejo.length; i++) {
-
-        PecuariaModel pecuaria = await pecuariaRepository.fetchUmaPecuaria(listaManejo[i].codTipoPecuaria.toString());
+        PecuariaModel pecuaria = await pecuariaRepository
+            .fetchUmaPecuaria(listaManejo[i].codTipoPecuaria.toString());
         String pathImagem = pathAnimal(pecuaria.descricao);
         listaCustomItens.add(CustomListItem(
           data: listaManejo[i].data!,
           propriedade: listaManejo[i].codPropriedade!,
-          thumbnail: Container(child: Image.asset(pathImagem)),
+          thumbnail: Image.asset(pathImagem),
           codigo: listaManejo[i].codigo.toString(),
           tipoES: listaManejo[i].tipoOperacao!,
         ));
@@ -97,7 +83,7 @@ class _ListaManejosState extends State<ListaManejos> {
     }
   }
 
-    _buildErro() {
+  _buildErro() {
     return const Center(
       child: Text(
         'Erro ao carregar dados!',
@@ -109,7 +95,6 @@ class _ListaManejosState extends State<ListaManejos> {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
     selectedMenu
@@ -117,14 +102,15 @@ class _ListaManejosState extends State<ListaManejos> {
     return MaterialApp(
       title: ListaManejos._title,
       home: Scaffold(
-        appBar: AppBar(title: Text(ListaManejos._title), actions: <Widget>[
+        appBar:
+            AppBar(title: const Text(ListaManejos._title), actions: <Widget>[
           MenuAppBar(selectedMenu: selectedMenu).build(context),
         ]),
-        body: carregando 
-        ? const Center(child: CircularProgressIndicator())
-          : erro
-          ? _buildErro()
-         : MyStatelessWidget(listaCustomItens: listaCustomItens),
+        body: carregando
+            ? const Center(child: CircularProgressIndicator())
+            : erro
+                ? _buildErro()
+                : MyStatelessWidget(listaCustomItens: listaCustomItens),
       ),
     );
   }
@@ -148,25 +134,51 @@ class CustomListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Expanded(
-            flex: 2,
-            child: thumbnail,
-          ),
-          Expanded(
-            flex: 3,
-            child: _ManejoDescricao(
-              title: "Manejo: $codigo",
-              data: data,
-              propriedade: propriedade,
-              tipoES: tipoES,
+    return Container(
+      decoration: BoxDecoration(
+        border:
+            Border.all(color: Colors.black, width: 1, style: BorderStyle.solid),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10.0),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Card(
+              child: SizedBox(
+                width: 300,
+                height: 100,
+                child: Row(
+                  children: [
+                    thumbnail,
+                    _ManejoDescricao(
+                      title: "Manejo: $codigo",
+                      data: data,
+                      propriedade: propriedade,
+                      tipoES: tipoES,
+                    ),
+                  ],
+                ),
+              ),
             ),
-          ),
-        ],
+            Expanded(
+              flex: 2,
+              child: thumbnail,
+            ),
+            Expanded(
+              flex: 3,
+              child: _ManejoDescricao(
+                title: "Manejo: $codigo",
+                data: data,
+                propriedade: propriedade,
+                tipoES: tipoES,
+              ),
+            ),
+            const SizedBox(
+              height: Valor.distancia,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -188,35 +200,32 @@ class _ManejoDescricao extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(5.0, 0.0, 0.0, 0.0),
-      child: Container(
-        decoration: const BoxDecoration(),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              title,
-              style: const TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: 14.0,
-              ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            title,
+            style: const TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 14.0,
             ),
-            const Padding(padding: EdgeInsets.symmetric(vertical: 2.0)),
-            Text(
-              'Data: $data',
-              style: const TextStyle(fontSize: 15.0),
-            ),
-            const Padding(padding: EdgeInsets.symmetric(vertical: 1.0)),
-            Text(
-              propriedade,
-              style: const TextStyle(fontSize: 10.0),
-            ),
-            const Padding(padding: EdgeInsets.symmetric(vertical: 1.0)),
-            Text(
-              tipoES,
-              style: const TextStyle(fontSize: 10.0),
-            )
-          ],
-        ),
+          ),
+          const Padding(padding: EdgeInsets.symmetric(vertical: 2.0)),
+          Text(
+            'Data: $data',
+            style: const TextStyle(fontSize: 15.0),
+          ),
+          const Padding(padding: EdgeInsets.symmetric(vertical: 1.0)),
+          Text(
+            propriedade,
+            style: const TextStyle(fontSize: 10.0),
+          ),
+          const Padding(padding: EdgeInsets.symmetric(vertical: 1.0)),
+          Text(
+            tipoES,
+            style: const TextStyle(fontSize: 10.0),
+          )
+        ],
       ),
     );
   }

@@ -1,10 +1,7 @@
-import 'dart:developer';
-
 import 'package:forms/models/manejo_model.dart';
 import 'package:forms/Auxiliares/valores.dart';
-import 'package:forms/models/manejo_recebe_model.dart';
-import '../models/pecuaria_model.dart';
 import 'package:dio/dio.dart';
+import 'package:forms/models/manejo_recebe_model.dart';
 
 class ManejoRepository {
   final dio = Dio();
@@ -28,5 +25,4 @@ class ManejoRepository {
       throw Exception(e);
     }
   }
-
 }
