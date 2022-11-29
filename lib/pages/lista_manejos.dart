@@ -134,19 +134,20 @@ class CustomListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        border:
-            Border.all(color: Colors.black, width: 1, style: BorderStyle.solid),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10.0),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Card(
+    double comprimento = MediaQuery.of(context).size.width - 25;
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Card(
+            child: InkWell(
+              splashColor: Colors.blue.withAlpha(30),
+              onTap: () {
+                debugPrint('Card tapped.');
+              },
               child: SizedBox(
-                width: 300,
+                width: comprimento,
                 height: 100,
                 child: Row(
                   children: [
@@ -161,24 +162,11 @@ class CustomListItem extends StatelessWidget {
                 ),
               ),
             ),
-            Expanded(
-              flex: 2,
-              child: thumbnail,
-            ),
-            Expanded(
-              flex: 3,
-              child: _ManejoDescricao(
-                title: "Manejo: $codigo",
-                data: data,
-                propriedade: propriedade,
-                tipoES: tipoES,
-              ),
-            ),
-            const SizedBox(
-              height: Valor.distancia,
-            ),
-          ],
-        ),
+          ),
+          const SizedBox(
+            height: Valor.distancia,
+          ),
+        ],
       ),
     );
   }
