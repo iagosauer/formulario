@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:forms/Auxiliares/Utils.dart';
 import 'package:forms/Auxiliares/valores.dart';
 import 'package:forms/models/manejo_recebe_model.dart';
 import 'package:forms/models/pecuaria_model.dart';
+import 'package:forms/pages/classes/manejo_card.dart';
 import 'package:forms/pages/classes/navegacao.dart';
 import 'package:forms/repositories/manejo_repository.dart';
 import 'package:forms/repositories/pecuaria_repository.dart';
 import 'package:forms/widgets/menu_appbar.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ListaManejos extends StatefulWidget {
   const ListaManejos({super.key});
@@ -64,7 +67,8 @@ class _ListaManejosState extends State<ListaManejos> {
             .fetchUmaPecuaria(listaManejo[i].codTipoPecuaria.toString());
         String pathImagem = pathAnimal(pecuaria.descricao);
         listaCustomItens.add(CustomListItem(
-          data: listaManejo[i].data!,
+          pecuaria: pecuaria.descricao,
+          data: Utils().ConverteDateParaDataString(listaManejo[i].data!),
           propriedade: listaManejo[i].codPropriedade!,
           thumbnail: Image.asset(pathImagem),
           codigo: listaManejo[i].codigo.toString(),
@@ -124,6 +128,7 @@ class CustomListItem extends StatelessWidget {
     required this.data,
     required this.propriedade,
     required this.tipoES,
+    required this.pecuaria,
   });
 
   final Widget thumbnail;
@@ -131,32 +136,36 @@ class CustomListItem extends StatelessWidget {
   final String data;
   final String propriedade;
   final String tipoES;
+  final String pecuaria;
 
   @override
   Widget build(BuildContext context) {
     double comprimento = MediaQuery.of(context).size.width - 25;
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10.0),
+      padding: const EdgeInsets.symmetric(vertical: 0.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Card(
+            elevation: 10,
+            color: Theme.of(context).colorScheme.surfaceVariant,
             child: InkWell(
               splashColor: Colors.blue.withAlpha(30),
               onTap: () {
-                debugPrint('Card tapped.');
+                debugPrint('Manejo: $codigo');
               },
               child: SizedBox(
                 width: comprimento,
-                height: 100,
+                height: 210,
                 child: Row(
                   children: [
-                    thumbnail,
-                    _ManejoDescricao(
-                      title: "Manejo: $codigo",
+                    ManejoCard(
+                      pecuaria: pecuaria,
+                      title: codigo,
                       data: data,
                       propriedade: propriedade,
                       tipoES: tipoES,
+                      thumbnail:thumbnail
                     ),
                   ],
                 ),
@@ -172,52 +181,7 @@ class CustomListItem extends StatelessWidget {
   }
 }
 
-class _ManejoDescricao extends StatelessWidget {
-  const _ManejoDescricao(
-      {required this.title,
-      required this.data,
-      required this.propriedade,
-      required this.tipoES});
 
-  final String title;
-  final String data;
-  final String propriedade;
-  final String tipoES;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(5.0, 0.0, 0.0, 0.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            title,
-            style: const TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 14.0,
-            ),
-          ),
-          const Padding(padding: EdgeInsets.symmetric(vertical: 2.0)),
-          Text(
-            'Data: $data',
-            style: const TextStyle(fontSize: 15.0),
-          ),
-          const Padding(padding: EdgeInsets.symmetric(vertical: 1.0)),
-          Text(
-            propriedade,
-            style: const TextStyle(fontSize: 10.0),
-          ),
-          const Padding(padding: EdgeInsets.symmetric(vertical: 1.0)),
-          Text(
-            tipoES,
-            style: const TextStyle(fontSize: 10.0),
-          )
-        ],
-      ),
-    );
-  }
-}
 
 class MyStatelessWidget extends StatelessWidget {
   final List<CustomListItem> listaCustomItens;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:forms/pages/filtro_manejo.dart';
 import 'package:forms/pages/form_manejo.dart';
 import 'package:forms/pages/lista_manejos.dart';
 
@@ -26,7 +27,7 @@ class Navegacao{
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => const ListaManejos(),
+          builder: (context) =>  FiltroManejos(),
         ),
       );
     }

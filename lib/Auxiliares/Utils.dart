@@ -38,6 +38,11 @@ class Utils {
     return ((ano % 4 == 0) && ((!(ano % 100 == 0)) || (ano % 400 == 0)));
   }
 
+  String ConverteDateParaDataString(String date)
+  {
+    return date[8]+date[9]+'/'+date[5]+date[6]+'/'+date[0]+date[1]+date[2]+date[3];
+  }
+
   String ConverteDataStringParaDate(String data) {
     String retorno;
     String dia = data[0] + data[1];
