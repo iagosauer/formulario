@@ -43,8 +43,7 @@ class _FormManejoState extends State<FormManejo> {
   initState() {
     super.initState();
     controladores.selectedMenu.addListener(
-      () => Navegacao(controladores.selectedMenu, context).acoesDeMenu()
-       );
+        () => Navegacao(controladores.selectedMenu, context).acoesDeMenu());
     controladores.updateScreen.addListener(
       () => _buscarDados(),
     );
@@ -61,15 +60,11 @@ class _FormManejoState extends State<FormManejo> {
 
   List<String> ListaSexo = <String>[];
 
-  _acoesDeMenu()
-  {
+  _acoesDeMenu() {
     bool x = true;
-    if(controladores.selectedMenu.value == ItensDeMenu.cadastrar)
-    {
+    if (controladores.selectedMenu.value == ItensDeMenu.cadastrar) {
       _buscarDados();
-    }
-    else
-    {
+    } else {
       x = false;
       Navigator.push(
         context,
@@ -78,8 +73,7 @@ class _FormManejoState extends State<FormManejo> {
         ),
       );
     }
-    x ? controladores.selectedMenu.value = ItensDeMenu.controlar : null ;
-    
+    x ? controladores.selectedMenu.value = ItensDeMenu.controlar : null;
   }
 
   Future _buscarDados() async {
@@ -107,10 +101,10 @@ class _FormManejoState extends State<FormManejo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(widget.title), actions: <Widget>[
-      MenuAppBar(selectedMenu: controladores.selectedMenu).build(context),
+        MenuAppBar(selectedMenu: controladores.selectedMenu).build(context),
       ]),
       body: carregando
-          ? const Center(child: CircularProgressIndicator())
+          ? Center(child: Lotties.aminalLoading())
           : erro
               ? Valor.buildErro(context)
               : _Sucesso(),
@@ -221,7 +215,8 @@ class _FormManejoState extends State<FormManejo> {
     ));
     controladores.controlerFinalidade = ValueNotifier<FinalidadeModel>(
         FinalidadeModel(codigo: 0, descricao: ''));
-        controladores.controlerFazendaDestino = ValueNotifier<PropriedadeModel>(PropriedadeModel(
+    controladores.controlerFazendaDestino =
+        ValueNotifier<PropriedadeModel>(PropriedadeModel(
       codigo: 0,
       nome: '',
     ));
@@ -247,4 +242,3 @@ class _FormManejoState extends State<FormManejo> {
     ListaSexo = <String>['MACHO', 'FÊMEA'];
   }
 }
-

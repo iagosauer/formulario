@@ -1,14 +1,18 @@
+import 'dart:js';
+
 import 'package:flutter/material.dart';
 import 'package:forms/Auxiliares/Utils.dart';
 import 'package:forms/Auxiliares/valores.dart';
 import 'package:forms/models/manejo_recebe_model.dart';
 import 'package:forms/models/pecuaria_model.dart';
+import 'package:forms/pages/classes/lotties.dart';
 import 'package:forms/pages/classes/manejo_card.dart';
 import 'package:forms/pages/classes/navegacao.dart';
 import 'package:forms/repositories/manejo_repository.dart';
 import 'package:forms/repositories/pecuaria_repository.dart';
 import 'package:forms/widgets/menu_appbar.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:popup_card/popup_card.dart';
 
 class ListaManejos extends StatefulWidget {
   const ListaManejos({super.key});
@@ -33,7 +37,6 @@ class _ListaManejosState extends State<ListaManejos> {
     super.initState();
     _buscarDados();
   }
-
 
   Future _buscarDados() async {
     try {
@@ -79,7 +82,7 @@ class _ListaManejosState extends State<ListaManejos> {
           MenuAppBar(selectedMenu: selectedMenu).build(context),
         ]),
         body: carregando
-            ? const Center(child: CircularProgressIndicator())
+            ? Center(child: Lotties.aminalLoading())
             : erro
                 ? Valor.buildErro(context)
                 : MyStatelessWidget(listaCustomItens: listaCustomItens),
@@ -106,6 +109,24 @@ class CustomListItem extends StatelessWidget {
   final String tipoES;
   final String pecuaria;
 
+  abreManejo(CustomListItem item, BuildContext context) {
+    String codigo = item.codigo;
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(
+          'Manejo: $codigo',
+          style: TextStyle(
+              fontFamily: 'Arial',
+              color: true ? Colors.blue : Colors.grey,
+              fontSize: 14,
+              fontWeight: FontWeight.bold),
+        ),
+        content: Text(''),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     double comprimento = MediaQuery.of(context).size.width - 25;
@@ -114,29 +135,46 @@ class CustomListItem extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Card(
-            elevation: 10,
-            color: Theme.of(context).colorScheme.surfaceVariant,
-            child: InkWell(
-              splashColor: Colors.blue.withAlpha(30),
-              onTap: () {
-                debugPrint('Manejo: $codigo');
-              },
-              child: SizedBox(
-                width: comprimento,
-                height: 210,
-                child: Row(
-                  children: [
-                    ManejoCard(
-                      pecuaria: pecuaria,
-                      title: codigo,
-                      data: data,
-                      propriedade: propriedade,
-                      tipoES: tipoES,
-                      thumbnail:thumbnail
-                    ),
-                  ],
+          PopupItemLauncher(
+            // ignore: sort_child_properties_last
+            child: Card(
+              elevation: 10,
+              color: Theme.of(context).colorScheme.surfaceVariant,
+              child: InkWell(
+                splashColor: Colors.blue.withAlpha(30),
+                /*onTap: () {
+                },*/
+                child: SizedBox(
+                  width: comprimento,
+                  height: 210,
+                  child: Row(
+                    children: [
+                      ManejoCard(
+                          pecuaria: pecuaria,
+                          title: codigo,
+                          data: data,
+                          propriedade: propriedade,
+                          tipoES: tipoES,
+                          thumbnail: thumbnail),
+                    ],
+                  ),
                 ),
+              ),
+            ),
+            popUp: PopUpItem(
+              padding: EdgeInsets.all(8),
+              color: Colors.white,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(32)),
+              elevation: 2,
+              tag: 'test',
+              child: Text(
+                'Manejo: $codigo',
+                style: TextStyle(
+                    fontFamily: 'Arial',
+                    color: true ? Colors.blue : Colors.grey,
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold),
               ),
             ),
           ),
@@ -148,8 +186,6 @@ class CustomListItem extends StatelessWidget {
     );
   }
 }
-
-
 
 class MyStatelessWidget extends StatelessWidget {
   final List<CustomListItem> listaCustomItens;

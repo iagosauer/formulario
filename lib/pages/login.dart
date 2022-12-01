@@ -16,19 +16,17 @@ class TelaLogin extends StatefulWidget {
 }
 
 class _TelaLoginState extends State<TelaLogin> {
-   var list = <UsuarioModel>[];
-    final respositoryUsuario = UsuarioRepository();
-    ValueNotifier controlerLogin = ValueNotifier('');
-    TextEditingController controlerSenha = TextEditingController();
-    bool carregando = false;
-    bool erro = false;
-
+  var list = <UsuarioModel>[];
+  final respositoryUsuario = UsuarioRepository();
+  ValueNotifier controlerLogin = ValueNotifier('');
+  TextEditingController controlerSenha = TextEditingController();
+  bool carregando = false;
+  bool erro = false;
 
   @override
   initState() {
-    
     super.initState();
-     _buscarDados();
+    _buscarDados();
   }
 
   Future _buscarDados() async {
@@ -48,15 +46,13 @@ class _TelaLoginState extends State<TelaLogin> {
     }
   }
 
-
   Widget build(BuildContext context) {
     return Scaffold(
-      body: carregando
-      ? const Center(child: CircularProgressIndicator())
-      : erro
-        ? Valor.buildErro(context)
-        : _Sucesso()
-    );
+        body: carregando
+            ? Center(child: Lotties.aminalLoading())
+            : erro
+                ? Valor.buildErro(context)
+                : _Sucesso());
   }
 
   SingleChildScrollView _Sucesso() {
@@ -65,38 +61,42 @@ class _TelaLoginState extends State<TelaLogin> {
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: Column(
-          children: [
-            TweenAnimationBuilder<double>(
-              duration: const Duration(seconds: 2),
-              curve: Curves.bounceOut,
-              tween: Tween(begin: 30, end: 5),
-              builder: (context, value, _) {
-                return SizedBox(
-                  width: 128,
-                  height: 128,
-                  child: Transform.scale(
-                    scale: value * .2,
-                    child: Image.asset("assets/portal.png",),),
-                );
-              }
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            CustomDropDownButtonForm(list: list, controler: controlerLogin),
-            const SizedBox(
-              height: 10,
-            ),
-            CustomTextFieldPassword(controler: controlerSenha),
-            const SizedBox(
-              height: 10,
-            ),
-            CustomBotaoLogin(login: controlerLogin, senha: controlerSenha,),
-          ],
-    
+            children: [
+              TweenAnimationBuilder<double>(
+                  duration: const Duration(seconds: 2),
+                  curve: Curves.bounceOut,
+                  tween: Tween(begin: 30, end: 5),
+                  builder: (context, value, _) {
+                    return SizedBox(
+                      width: 128,
+                      height: 128,
+                      child: Transform.scale(
+                        scale: value * .2,
+                        child: Image.asset(
+                          "assets/portal.png",
+                        ),
+                      ),
+                    );
+                  }),
+              const SizedBox(
+                height: 20,
+              ),
+              CustomDropDownButtonForm(list: list, controler: controlerLogin),
+              const SizedBox(
+                height: 10,
+              ),
+              CustomTextFieldPassword(controler: controlerSenha),
+              const SizedBox(
+                height: 10,
+              ),
+              CustomBotaoLogin(
+                login: controlerLogin,
+                senha: controlerSenha,
+              ),
+            ],
+          ),
+        ),
       ),
-      ),
-      ),
-      );
+    );
   }
 }
