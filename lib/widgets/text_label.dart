@@ -3,8 +3,9 @@ import 'package:forms/Auxiliares/valores.dart';
 
 class CustomTextLabel extends StatelessWidget {
   String texto;
+  bool habilitado;
 
-  CustomTextLabel({Key? key, required this.texto}) : super(key: key);
+  CustomTextLabel({Key? key, required this.texto, this.habilitado=true}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,7 @@ class CustomTextLabel extends StatelessWidget {
             // ignore: prefer_const_constructors
             style: TextStyle(
                 fontFamily: 'Arial',
-                color: Colors.blue,
+                color: habilitado ? Colors.blue : Colors.grey,
                 fontSize: 14,
                 fontWeight: FontWeight.bold),
           ),

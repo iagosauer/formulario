@@ -19,6 +19,7 @@ class CustomTextFieldPassword extends StatelessWidget {
       keyboardType: TextInputType.text,
       obscureText: true,
       decoration: const InputDecoration(
+        border: OutlineInputBorder(),
         labelText: "Senha",
         labelStyle: TextStyle(
           color: Colors.black38,

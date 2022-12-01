@@ -26,7 +26,8 @@ class _CustomBotaoLoginState extends State<CustomBotaoLogin> {
   void _login(BuildContext context) async
   {
     var usuarioRepository = UsuarioRepository();
-    if(await usuarioRepository.fetchLogin(login: widget.login.value.login, senha: widget.senha.text))
+    if(await usuarioRepository.fetchLogin(login: widget.login.value.login,
+     senha: widget.senha.text))
     {
       Navigator.pushReplacement(
         context,

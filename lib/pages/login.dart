@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:forms/Auxiliares/valores.dart';
 import 'package:forms/models/usuario_model.dart';
+import 'package:forms/pages/classes/lotties.dart';
 import 'package:forms/repositories/usuario.repository.dart';
 import 'package:forms/widgets/drop_down_button.dart';
 import '../widgets/botao_login.dart';
@@ -46,24 +48,13 @@ class _TelaLoginState extends State<TelaLogin> {
     }
   }
 
-    _buildErro() {
-    return const Center(
-      child: Text(
-        'Erro ao carregar dados!',
-        style: TextStyle(
-          color: Colors.red,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    );
-  }
 
   Widget build(BuildContext context) {
     return Scaffold(
       body: carregando
       ? const Center(child: CircularProgressIndicator())
       : erro
-        ? _buildErro()
+        ? Valor.buildErro(context)
         : _Sucesso()
     );
   }
@@ -75,10 +66,19 @@ class _TelaLoginState extends State<TelaLogin> {
           padding: const EdgeInsets.all(20),
           child: Column(
           children: [
-            SizedBox(
-              width: 128,
-              height: 128,
-              child: Image.asset("assets/portal.png"),
+            TweenAnimationBuilder<double>(
+              duration: const Duration(seconds: 2),
+              curve: Curves.bounceOut,
+              tween: Tween(begin: 30, end: 5),
+              builder: (context, value, _) {
+                return SizedBox(
+                  width: 128,
+                  height: 128,
+                  child: Transform.scale(
+                    scale: value * .2,
+                    child: Image.asset("assets/portal.png",),),
+                );
+              }
             ),
             const SizedBox(
               height: 20,

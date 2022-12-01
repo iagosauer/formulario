@@ -12,6 +12,7 @@ class CustomTextField extends StatelessWidget {
   bool data;
   bool inteiro;
   String? textoInicial = '';
+  bool number;
 
   CustomTextField(
       {Key? key,
@@ -21,7 +22,8 @@ class CustomTextField extends StatelessWidget {
       this.icon,
       this.data = false,
       this.inteiro = false,
-      this.textoInicial})
+      this.textoInicial,
+      this.number = false})
       : super(key: key);
 
   @override
@@ -72,6 +74,7 @@ class CustomTextField extends StatelessWidget {
                 return null;
               }
             },
+            keyboardType: number ? TextInputType.number : TextInputType.text,
           ),
         ),
         const SizedBox(

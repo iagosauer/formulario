@@ -34,26 +34,6 @@ class _ListaManejosState extends State<ListaManejos> {
     _buscarDados();
   }
 
-  String pathAnimal(String pecuaria) {
-    String retorno;
-    if (pecuaria.compareTo('AVICULTURA') == 0) {
-      retorno = Valor.pathAvicultura;
-    } else if (pecuaria.compareTo('SUÍNA') == 0) {
-      retorno = Valor.pathSuina;
-    } else if (pecuaria.compareTo('OVINA') == 0) {
-      retorno = Valor.pathOvina;
-    } else if (pecuaria.compareTo('EQUINA') == 0) {
-      retorno = Valor.pathEquina;
-    } else if (pecuaria.compareTo('BUFALINA') == 0) {
-      retorno = Valor.pathBufalina;
-    } else if (pecuaria.compareTo('AQUICULTURA') == 0) {
-      retorno = Valor.pathAquicultura;
-    } else {
-      retorno = Valor.pathBovino;
-    }
-
-    return retorno;
-  }
 
   Future _buscarDados() async {
     try {
@@ -65,7 +45,7 @@ class _ListaManejosState extends State<ListaManejos> {
       for (int i = 0; i < listaManejo.length; i++) {
         PecuariaModel pecuaria = await pecuariaRepository
             .fetchUmaPecuaria(listaManejo[i].codTipoPecuaria.toString());
-        String pathImagem = pathAnimal(pecuaria.descricao);
+        String pathImagem = Valor.ideia[pecuaria.descricao]!;
         listaCustomItens.add(CustomListItem(
           pecuaria: pecuaria.descricao,
           data: Utils().ConverteDateParaDataString(listaManejo[i].data!),
@@ -87,18 +67,6 @@ class _ListaManejosState extends State<ListaManejos> {
     }
   }
 
-  _buildErro() {
-    return const Center(
-      child: Text(
-        'Erro ao carregar dados!',
-        style: TextStyle(
-          color: Colors.red,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     selectedMenu
@@ -113,7 +81,7 @@ class _ListaManejosState extends State<ListaManejos> {
         body: carregando
             ? const Center(child: CircularProgressIndicator())
             : erro
-                ? _buildErro()
+                ? Valor.buildErro(context)
                 : MyStatelessWidget(listaCustomItens: listaCustomItens),
       ),
     );

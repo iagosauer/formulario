@@ -32,18 +32,18 @@ class ManejoCard extends StatelessWidget {
             Row(children:<Widget>[          
               Text(
                 'Manejo: ',
-                style: GoogleFonts.alfaSlabOne(
+                style: GoogleFonts.openSans(
                 color: Colors.black,
-                fontWeight: FontWeight.w500,
-                fontSize: 16.0,
+                fontWeight: FontWeight.bold,
+                fontSize: 14.0,
               ),
             ),
             Text(
               title,
-              style: GoogleFonts.alfaSlabOne(
+              style: GoogleFonts.openSans(
               color: Colors.red,
-              fontWeight: FontWeight.w500,
-              fontSize: 16.0,
+              fontWeight: FontWeight.bold,
+              fontSize: 14.0,
               ),
             ),
             ],),

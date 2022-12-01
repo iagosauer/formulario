@@ -3,6 +3,7 @@ import 'package:forms/Auxiliares/valores.dart';
 import 'package:forms/pages/classes/controladores_filtro.dart';
 import 'package:forms/pages/classes/manejo_card.dart';
 import 'package:forms/pages/classes/navegacao.dart';
+import 'package:forms/widgets/botao_filtrar.dart';
 import 'package:forms/widgets/menu_appbar.dart';
 import 'package:forms/widgets/swicth_linha.dart';
 import 'package:forms/widgets/text_field.dart';
@@ -96,11 +97,21 @@ class MyStatelessWidget extends StatelessWidget {
     return SingleChildScrollView(
       child:Padding(padding: EdgeInsets.all(20),
         child: Column(children: [
-          CustomTextLabel(texto: 'Digite o número do Manejo:'),
-          CustomTextFieldLinha(controler: controladores.controlerCodigoManejo,
+          CustomTextLabel(texto: 'Data Inicial:',
+          habilitado: controladores.controlerHabilitadoCodigo.value,),
+          CustomTextFieldLinha(controler: controladores.controlerDataInicial,
           inteiro: true,
+          habilitado: controladores.controlerHabilitadoCodigo.value,
+          data: true,
           ),
-          SwitchApp(controlador: controladores.controlerHabilitadoCodigo),
+            CustomTextLabel(texto: 'Data Final:',
+            habilitado: controladores.controlerHabilitadoCodigo.value,),
+            CustomTextFieldLinha(controler: controladores.controlerDataFinal,
+          inteiro: true,
+          habilitado: controladores.controlerHabilitadoCodigo.value,
+          data: true,
+          ),
+          CustomBotaoFiltrar(),
         ]),
       ),
       

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:forms/models/finalidade_model.dart';
 import 'package:forms/models/pecuaria_model.dart';
 import 'package:forms/models/propriedade_model.dart';
+import 'package:forms/pages/classes/lotties.dart';
 import 'package:forms/pages/classes/navegacao.dart';
 import 'package:forms/pages/lista_manejos.dart';
 import 'package:forms/repositories/finalidade_repository.dart';
@@ -102,18 +103,6 @@ class _FormManejoState extends State<FormManejo> {
     _reiniciaControladores();
   }
 
-  _buildErro() {
-    return const Center(
-      child: Text(
-        'Erro ao carregar dados!',
-        style: TextStyle(
-          color: Colors.red,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -123,7 +112,7 @@ class _FormManejoState extends State<FormManejo> {
       body: carregando
           ? const Center(child: CircularProgressIndicator())
           : erro
-              ? _buildErro()
+              ? Valor.buildErro(context)
               : _Sucesso(),
     );
   }

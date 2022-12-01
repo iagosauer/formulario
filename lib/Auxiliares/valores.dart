@@ -1,3 +1,7 @@
+import 'package:flutter/material.dart';
+
+import '../pages/classes/lotties.dart';
+
 class Valor {
   static const double distancia = 25;
   static const double radiusCircular = 40;
@@ -9,5 +13,38 @@ class Valor {
   static const String pathEquina = "assets/images/equina.png";
   static const String pathOvina = "assets/images/ovina.png";
   static const String pathSuina = "assets/images/suina.png";
+
+  static const ideia = {
+    'AVICULTURA': pathAvicultura,
+    'SUÍNA': pathSuina,
+    'OVINA' : pathOvina,
+    'EQUINA' : pathEquina,
+    'BUFALINA' : pathBufalina,
+    'AQUICULTURA': pathAquicultura,
+    'BOVINA' : pathBovino
+  };
+
+
+    static buildErro(BuildContext context) {
+    return  Column(
+      children: [
+        SizedBox(
+          height: (MediaQuery.of(context).size.height / 2) - 100,
+        ),
+        Center(
+          child: Lotties.erroInternet(),
+          ),
+          const Text(
+            'Erro ao carregar dados!',
+            style: TextStyle(
+              color: Colors.red,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+      ],
+    );
+
+  }
+
   
 }

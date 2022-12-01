@@ -31,6 +31,7 @@ class CustomTextFieldLinha extends StatelessWidget {
     if (data) {
       inputFormatter = [
         FilteringTextInputFormatter.digitsOnly,
+        
         DataInputFormatter()
       ];
     } else if (inteiro) {
@@ -40,11 +41,11 @@ class CustomTextFieldLinha extends StatelessWidget {
     } else {
       inputFormatter = [];
     }
-
+    
     return Row(
       children: [
         SizedBox(
-          width: MediaQuery.of(context).size.width - 40,
+          width: MediaQuery.of(context).size.width - 50,
           child: TextFormField(
             inputFormatters: inputFormatter,
             decoration: InputDecoration(
@@ -71,7 +72,7 @@ class CustomTextFieldLinha extends StatelessWidget {
           ),
         ),
         const SizedBox(
-          height: Valor.distancia,
+          height: Valor.distancia + 30,
         ),
       ],
     );
