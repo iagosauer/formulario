@@ -3,14 +3,18 @@ import 'dart:js';
 import 'package:flutter/material.dart';
 import 'package:forms/Auxiliares/Utils.dart';
 import 'package:forms/Auxiliares/valores.dart';
+import 'package:forms/models/finalidade_model.dart';
 import 'package:forms/models/manejo_recebe_model.dart';
 import 'package:forms/models/pecuaria_model.dart';
 import 'package:forms/pages/classes/lotties.dart';
 import 'package:forms/pages/classes/manejo_card.dart';
 import 'package:forms/pages/classes/navegacao.dart';
+import 'package:forms/pages/relatorio_manejo.dart';
+import 'package:forms/repositories/finalidade_repository.dart';
 import 'package:forms/repositories/manejo_repository.dart';
 import 'package:forms/repositories/pecuaria_repository.dart';
 import 'package:forms/widgets/menu_appbar.dart';
+import 'package:forms/widgets/text_label_report.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:popup_card/popup_card.dart';
 
@@ -44,18 +48,27 @@ class _ListaManejosState extends State<ListaManejos> {
         carregando = true;
       });
       PecuariaRepository pecuariaRepository = PecuariaRepository();
+      FinalidadeRepository finalidadeRepository = FinalidadeRepository();
+      
       listaManejo = await _manejoRepository.fetchTodosManejos();
       for (int i = 0; i < listaManejo.length; i++) {
         PecuariaModel pecuaria = await pecuariaRepository
             .fetchUmaPecuaria(listaManejo[i].codTipoPecuaria.toString());
+        FinalidadeModel finalidadeModel = await finalidadeRepository
+            .fetchUmaFinalidade(listaManejo[i].codFinalidade.toString());
         String pathImagem = Valor.ideia[pecuaria.descricao]!;
         listaCustomItens.add(CustomListItem(
+          idade: listaManejo[i].idade.toString(),
+          sexo: listaManejo[i].sexo!,
+          quantidade: listaManejo[i].quantidade.toString(),
+          motivo: listaManejo[i].motivos!,
           pecuaria: pecuaria.descricao,
           data: Utils().ConverteDateParaDataString(listaManejo[i].data!),
           propriedade: listaManejo[i].codPropriedade!,
           thumbnail: Image.asset(pathImagem),
           codigo: listaManejo[i].codigo.toString(),
           tipoES: listaManejo[i].tipoOperacao!,
+          finalidade: finalidadeModel.descricao,
         ));
       }
 
@@ -75,6 +88,7 @@ class _ListaManejosState extends State<ListaManejos> {
     selectedMenu
         .addListener(() => Navegacao(selectedMenu, context).acoesDeMenu());
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: ListaManejos._title,
       home: Scaffold(
         appBar:
@@ -100,6 +114,11 @@ class CustomListItem extends StatelessWidget {
     required this.propriedade,
     required this.tipoES,
     required this.pecuaria,
+    required this.finalidade,
+    required this.motivo,
+    required this.idade,
+    required this.sexo,
+    required this.quantidade
   });
 
   final Widget thumbnail;
@@ -108,23 +127,14 @@ class CustomListItem extends StatelessWidget {
   final String propriedade;
   final String tipoES;
   final String pecuaria;
+  final String finalidade;
+  final String motivo;
+  final String idade;
+  final String sexo;
+  final String quantidade;
 
   abreManejo(CustomListItem item, BuildContext context) {
-    String codigo = item.codigo;
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(
-          'Manejo: $codigo',
-          style: TextStyle(
-              fontFamily: 'Arial',
-              color: true ? Colors.blue : Colors.grey,
-              fontSize: 14,
-              fontWeight: FontWeight.bold),
-        ),
-        content: Text(''),
-      ),
-    );
+    RelatorioManejo(item: item, context: context,).build(context);
   }
 
   @override
@@ -135,46 +145,28 @@ class CustomListItem extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          PopupItemLauncher(
-            // ignore: sort_child_properties_last
-            child: Card(
-              elevation: 10,
-              color: Theme.of(context).colorScheme.surfaceVariant,
-              child: InkWell(
-                splashColor: Colors.blue.withAlpha(30),
-                /*onTap: () {
-                },*/
-                child: SizedBox(
-                  width: comprimento,
-                  height: 210,
-                  child: Row(
-                    children: [
-                      ManejoCard(
-                          pecuaria: pecuaria,
-                          title: codigo,
-                          data: data,
-                          propriedade: propriedade,
-                          tipoES: tipoES,
-                          thumbnail: thumbnail),
-                    ],
-                  ),
+          Card(
+            elevation: 10,
+            color: Theme.of(context).colorScheme.surfaceVariant,
+            child: InkWell(
+              splashColor: Colors.blue.withAlpha(30),
+              onTap: () {
+                abreManejo(this, context);
+              },
+              child: SizedBox(
+                width: comprimento,
+                height: 210,
+                child: Row(
+                  children: [
+                    ManejoCard(
+                        pecuaria: pecuaria,
+                        title: codigo,
+                        data: data,
+                        propriedade: propriedade,
+                        tipoES: tipoES,
+                        thumbnail: thumbnail),
+                  ],
                 ),
-              ),
-            ),
-            popUp: PopUpItem(
-              padding: EdgeInsets.all(8),
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(32)),
-              elevation: 2,
-              tag: 'test',
-              child: Text(
-                'Manejo: $codigo',
-                style: TextStyle(
-                    fontFamily: 'Arial',
-                    color: true ? Colors.blue : Colors.grey,
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold),
               ),
             ),
           ),

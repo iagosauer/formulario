@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:forms/Auxiliares/valores.dart';
 import 'package:forms/pages/classes/controladores_filtro.dart';
-import 'package:forms/pages/classes/lotties.dart';
 import 'package:forms/pages/classes/manejo_card.dart';
 import 'package:forms/pages/classes/navegacao.dart';
 import 'package:forms/widgets/botao_filtrar.dart';
@@ -17,8 +16,7 @@ class FiltroManejos extends StatefulWidget {
   static const String _title = 'Manejos';
 
   @override
-  State<FiltroManejos> createState() =>
-      _ListaManejosState(controladores: controladores);
+  State<FiltroManejos> createState() => _ListaManejosState(controladores: controladores);
 }
 
 class _ListaManejosState extends State<FiltroManejos> {
@@ -35,6 +33,8 @@ class _ListaManejosState extends State<FiltroManejos> {
     super.initState();
     _buscarDados();
   }
+
+
 
   Future _buscarDados() async {
     try {
@@ -69,6 +69,7 @@ class _ListaManejosState extends State<FiltroManejos> {
     selectedMenu
         .addListener(() => Navegacao(selectedMenu, context).acoesDeMenu());
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: FiltroManejos._title,
       home: Scaffold(
         appBar:
@@ -76,16 +77,17 @@ class _ListaManejosState extends State<FiltroManejos> {
           MenuAppBar(selectedMenu: selectedMenu).build(context),
         ]),
         body: carregando
-            ? Center(child: Lotties.aminalLoading())
+            ? const Center(child: CircularProgressIndicator())
             : erro
                 ? Valor.buildErro(context)
-                : MyStatelessWidget(
-                    controladores: controladores,
-                  ),
+                : MyStatelessWidget(controladores: controladores, ),
       ),
     );
   }
 }
+
+
+
 
 class MyStatelessWidget extends StatelessWidget {
   final ControladoresFiltro controladores;
@@ -94,32 +96,26 @@ class MyStatelessWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Padding(
-        padding: EdgeInsets.all(20),
+      child:Padding(padding: EdgeInsets.all(20),
         child: Column(children: [
-          CustomTextLabel(
-            texto: 'Data Inicial:',
-            habilitado: controladores.controlerHabilitadoCodigo.value,
+          CustomTextLabel(texto: 'Data Inicial:',
+          habilitado: controladores.controlerHabilitadoCodigo.value,),
+          CustomTextFieldLinha(controler: controladores.controlerDataInicial,
+          inteiro: true,
+          habilitado: controladores.controlerHabilitadoCodigo.value,
+          data: true,
           ),
-          CustomTextFieldLinha(
-            controler: controladores.controlerDataInicial,
-            inteiro: true,
-            habilitado: controladores.controlerHabilitadoCodigo.value,
-            data: true,
-          ),
-          CustomTextLabel(
-            texto: 'Data Final:',
-            habilitado: controladores.controlerHabilitadoCodigo.value,
-          ),
-          CustomTextFieldLinha(
-            controler: controladores.controlerDataFinal,
-            inteiro: true,
-            habilitado: controladores.controlerHabilitadoCodigo.value,
-            data: true,
+            CustomTextLabel(texto: 'Data Final:',
+            habilitado: controladores.controlerHabilitadoCodigo.value,),
+            CustomTextFieldLinha(controler: controladores.controlerDataFinal,
+          inteiro: true,
+          habilitado: controladores.controlerHabilitadoCodigo.value,
+          data: true,
           ),
           CustomBotaoFiltrar(),
         ]),
       ),
+      
     );
   }
 }

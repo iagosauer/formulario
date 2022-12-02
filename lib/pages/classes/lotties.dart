@@ -6,6 +6,16 @@ class Lotties {
       'lotties/78038-internet-error.json',
       height: 100,
       width: 100,
+      repeat: false,
+    );
+  }
+
+    static report() {
+    return Lottie.asset(
+      'lotties/85408-clip-board.json',
+      height: 70,
+      width: 70,
+      repeat: false,
     );
   }
 

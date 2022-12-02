@@ -17,4 +17,14 @@ class FinalidadeRepository {
       throw Exception(e);
     }
   }
+
+  Future<FinalidadeModel> fetchUmaFinalidade(String valor) async {
+    try {
+      final response = await dio.get('${Valor.baseUrl}/finalidade/$valor');
+      final retorno = FinalidadeModel.fromMap(response.data);
+      return retorno;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
 }
