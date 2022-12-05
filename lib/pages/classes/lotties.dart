@@ -10,6 +10,16 @@ class Lotties {
     );
   }
 
+  static bezerroBebendoLeite() {
+    return Lottie.asset(
+      'lotties/76436-cow-drink-milk.json',
+      height: 150,
+      width: 150,
+      repeat: false,
+    );
+  }
+
+
     static report() {
     return Lottie.asset(
       'lotties/85408-clip-board.json',
@@ -26,7 +36,7 @@ class Lotties {
       width: 100,
     );
   }
-
+//lotties/76436-cow-drink-milk.json
   loading() {
     return Lottie.asset(
       'lotties/83125-loading-check.json',

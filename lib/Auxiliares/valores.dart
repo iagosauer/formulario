@@ -14,7 +14,7 @@ class Valor {
   static const String pathOvina = "assets/images/ovina.png";
   static const String pathSuina = "assets/images/suina.png";
 
-  static const ideia = {
+  static const imagensPecuaria = {
     'AVICULTURA': pathAvicultura,
     'SUÍNA': pathSuina,
     'OVINA' : pathOvina,

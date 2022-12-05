@@ -19,7 +19,7 @@ class CustomTextLabelReport extends StatelessWidget {
             style: TextStyle(
                 fontFamily: 'Arial',
                 color:  Colors.white,
-                fontSize: 26,
+                fontSize: 23,
                 fontWeight: FontWeight.bold),
           ),
           const SizedBox(

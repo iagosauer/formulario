@@ -47,28 +47,21 @@ class _ListaManejosState extends State<ListaManejos> {
       setState(() {
         carregando = true;
       });
-      PecuariaRepository pecuariaRepository = PecuariaRepository();
-      FinalidadeRepository finalidadeRepository = FinalidadeRepository();
-      
       listaManejo = await _manejoRepository.fetchTodosManejos();
       for (int i = 0; i < listaManejo.length; i++) {
-        PecuariaModel pecuaria = await pecuariaRepository
-            .fetchUmaPecuaria(listaManejo[i].codTipoPecuaria.toString());
-        FinalidadeModel finalidadeModel = await finalidadeRepository
-            .fetchUmaFinalidade(listaManejo[i].codFinalidade.toString());
-        String pathImagem = Valor.ideia[pecuaria.descricao]!;
+        String pathImagem = Valor.imagensPecuaria[listaManejo[i].pecuariaModel!.descricao]!;
         listaCustomItens.add(CustomListItem(
           idade: listaManejo[i].idade.toString(),
           sexo: listaManejo[i].sexo!,
           quantidade: listaManejo[i].quantidade.toString(),
           motivo: listaManejo[i].motivos!,
-          pecuaria: pecuaria.descricao,
+          pecuaria: listaManejo[i].pecuariaModel!.descricao,
           data: Utils().ConverteDateParaDataString(listaManejo[i].data!),
-          propriedade: listaManejo[i].codPropriedade!,
+          propriedade: listaManejo[i].propriedadeModel!.nome,
           thumbnail: Image.asset(pathImagem),
           codigo: listaManejo[i].codigo.toString(),
           tipoES: listaManejo[i].tipoOperacao!,
-          finalidade: finalidadeModel.descricao,
+          finalidade: listaManejo[i].finalidadeModel!.descricao,
         ));
       }
 

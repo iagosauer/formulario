@@ -1,10 +1,14 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
+import 'package:forms/models/finalidade_model.dart';
+import 'package:forms/models/pecuaria_model.dart';
+import 'package:forms/models/propriedade_model.dart';
+
 class ManejoRecebeModel {
   final int? codigo;
   final String? data;
-  final String? codPropriedade;
+  final int? codPropriedade;
   final int? codTipoPecuaria;
   final int? codFinalidade;
   final String? tipoOperacao;
@@ -13,6 +17,9 @@ class ManejoRecebeModel {
   final String? sexo;
   final int? quantidade;
   int? propriedadeDestino;
+  final PecuariaModel? pecuariaModel;
+  final FinalidadeModel? finalidadeModel;
+  final PropriedadeModel? propriedadeModel;
 
   ManejoRecebeModel({
     this.codigo,
@@ -26,6 +33,9 @@ class ManejoRecebeModel {
     this.sexo,
     this.quantidade,
     this.propriedadeDestino,
+    this.pecuariaModel,
+    this.finalidadeModel,
+    this.propriedadeModel
   });
 
   Map<String, dynamic> toMap() {
@@ -41,6 +51,9 @@ class ManejoRecebeModel {
       'sexo': sexo,
       'quantidade': quantidade,
       'propriedadeDestino': propriedadeDestino,
+      'tipoPecuaria' : pecuariaModel,
+      'finalidade' : finalidadeModel,
+      'propriedade' : propriedadeModel
     };
   }
 
@@ -48,15 +61,18 @@ class ManejoRecebeModel {
     return ManejoRecebeModel(
       codigo: map['codigo'] as int?,
       data: map['data'] as String?,
-      codPropriedade: map['propriedade'] as String?,
-      codTipoPecuaria: map['tipopecuaria'] as int?,
-      codFinalidade: map['finalidade'] as int?,
-      tipoOperacao: map['tipooperacao'] as String?,
+      codPropriedade: map['codPropriedade'] as int?,
+      codTipoPecuaria: map['codTipoPecuaria'] as int?,
+      codFinalidade: map['codFinalidade'] as int?,
+      tipoOperacao: map['tipoOperacao'] as String?,
       motivos: map['motivos'] as String?,
       idade: map['idade'] as int?,
       sexo: map['sexo'] as String?,
       quantidade: map['quantidade'] as int?,
       propriedadeDestino: map['propriedadeDestino'] as int?,
+      pecuariaModel: PecuariaModel.fromMap(map['tipoPecuaria']),
+      finalidadeModel: FinalidadeModel.fromMap(map['finalidade']),
+      propriedadeModel: PropriedadeModel.fromMap(map['propriedade']),
     );
   }
 
