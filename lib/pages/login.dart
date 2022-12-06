@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:forms/Auxiliares/valores.dart';
+import 'package:forms/Auxiliares/Valores.dart';
 import 'package:forms/models/usuario_model.dart';
 import 'package:forms/pages/classes/lotties.dart';
 import 'package:forms/repositories/usuario.repository.dart';

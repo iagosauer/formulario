@@ -16,8 +16,8 @@ import '../repositories/propriedade_repository.dart';
 import '../widgets/botao_cadastrar.dart';
 import '../widgets/drop_down_button.dart';
 import '../widgets/text_label.dart';
-import '../Auxiliares/valores.dart';
-import 'classes/controladores.dart';
+import '../Auxiliares/Valores.dart';
+import 'classes/controladores_cadastro_manejo.dart';
 
 // ignore: must_be_immutable
 class FormManejo extends StatefulWidget {
@@ -63,22 +63,6 @@ class _FormManejoState extends State<FormManejo> {
 
   List<String> ListaSexo = <String>[];
 
-  // ignore: unused_element
-  _acoesDeMenu() {
-    bool x = true;
-    if (controladores.selectedMenu.value == ItensDeMenu.cadastrar) {
-      _buscarDados();
-    } else {
-      x = false;
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const ListaManejos(),
-        ),
-      );
-    }
-    x ? controladores.selectedMenu.value = ItensDeMenu.controlar : null;
-  }
 
   Future _buscarDados() async {
     try {

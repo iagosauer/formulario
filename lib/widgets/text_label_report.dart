@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:forms/Auxiliares/valores.dart';
+import 'package:forms/Auxiliares/Valores.dart';
 
 // ignore: must_be_immutable
 class CustomTextLabelReport extends StatelessWidget {
@@ -20,7 +20,7 @@ class CustomTextLabelReport extends StatelessWidget {
             style: TextStyle(
                 fontFamily: 'Arial',
                 color:  Colors.white,
-                fontSize: 23,
+                fontSize: 18,
                 fontWeight: FontWeight.bold),
           ),
           const SizedBox(

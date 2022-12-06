@@ -5,10 +5,10 @@ import 'package:forms/repositories/codigoManejo_repository.dart';
 import 'package:forms/repositories/manejo_repository.dart';
 import 'package:forms/repositories/saldo_repository.dart';
 import 'package:forms/widgets/janelaDialog.dart';
-import 'package:forms/Auxiliares/valores.dart';
+import 'package:forms/Auxiliares/Valores.dart';
 import 'package:brasil_fields/brasil_fields.dart';
 import '../models/propriedade_model.dart';
-import '../pages/classes/controladores.dart';
+import '../pages/classes/controladores_cadastro_manejo.dart';
 import 'dialog_propriedades_destino.dart';
 
 // ignore: must_be_immutable

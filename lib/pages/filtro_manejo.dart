@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:forms/Auxiliares/valores.dart';
+import 'package:forms/Auxiliares/Valores.dart';
 import 'package:forms/pages/classes/controladores_filtro.dart';
 import 'package:forms/pages/classes/navegacao.dart';
 import 'package:forms/widgets/botao_filtrar.dart';
@@ -7,6 +7,7 @@ import 'package:forms/widgets/menu_appbar.dart';
 import 'package:forms/widgets/text_field_linha.dart';
 import 'package:forms/widgets/text_label.dart';
 
+// ignore: must_be_immutable
 class FiltroManejos extends StatefulWidget {
   FiltroManejos({super.key});
   var controladores = ControladoresFiltro();
@@ -76,9 +77,16 @@ class _ListaManejosState extends State<FiltroManejos> {
 
 
 
-class MyStatelessWidget extends StatelessWidget {
+class MyStatelessWidget extends StatefulWidget {
   final ControladoresFiltro controladores;
-  const MyStatelessWidget({super.key, required this.controladores});
+  MyStatelessWidget({super.key, required this.controladores});
+
+  @override
+  State<MyStatelessWidget> createState() => _MyStatelessWidgetState();
+}
+
+class _MyStatelessWidgetState extends State<MyStatelessWidget> {
+  ValueNotifier<bool> pesquisaTodos = ValueNotifier(false);
 
   @override
   Widget build(BuildContext context) {
@@ -86,20 +94,39 @@ class MyStatelessWidget extends StatelessWidget {
       child:Padding(padding: const EdgeInsets.all(20),
         child: Column(children: [
           CustomTextLabel(texto: 'Data Inicial:',
-          habilitado: controladores.controlerHabilitadoCodigo.value,),
-          CustomTextFieldLinha(controler: controladores.controlerDataInicial,
+          habilitado: widget.controladores.controlerHabilitadoCodigo.value,),
+          CustomTextFieldLinha(controler: widget.controladores.controlerDataInicial,
           inteiro: true,
-          habilitado: controladores.controlerHabilitadoCodigo.value,
+          habilitado: widget.controladores.controlerHabilitadoCodigo.value,
           data: true,
           ),
             CustomTextLabel(texto: 'Data Final:',
-            habilitado: controladores.controlerHabilitadoCodigo.value,),
-            CustomTextFieldLinha(controler: controladores.controlerDataFinal,
+            habilitado: widget.controladores.controlerHabilitadoCodigo.value,),
+            CustomTextFieldLinha(controler: widget.controladores.controlerDataFinal,
           inteiro: true,
-          habilitado: controladores.controlerHabilitadoCodigo.value,
+          habilitado: widget.controladores.controlerHabilitadoCodigo.value,
           data: true,
           ),
-          CustomBotaoFiltrar(),
+          Row(
+            textDirection: TextDirection.ltr,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+               CustomTextLabel(texto: 'Pesquisar todos os manejos:',
+            habilitado: true,),
+              Checkbox(
+                checkColor: Colors.white,
+                value: pesquisaTodos.value,
+                onChanged: (bool? value) {
+                  setState(() {
+                    pesquisaTodos.value = value!;
+                    widget.controladores.controlerHabilitadoCodigo.value = !value;
+                  });
+      },
+    ),
+            ],
+          ),
+          CustomBotaoFiltrar(data1: widget.controladores.controlerDataInicial,
+           data2: widget.controladores.controlerDataFinal,),
         ]),
       ),
       

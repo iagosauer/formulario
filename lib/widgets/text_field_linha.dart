@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/services.dart';
 import 'package:forms/Auxiliares/Utils.dart';
-import 'package:forms/Auxiliares/valores.dart';
+import 'package:forms/Auxiliares/Valores.dart';
 
 // ignore: must_be_immutable
 class CustomTextFieldLinha extends StatelessWidget {
@@ -29,6 +29,12 @@ class CustomTextFieldLinha extends StatelessWidget {
   Widget build(BuildContext context) {
     List<TextInputFormatter> inputFormatter;
     String mensagemErro = '';
+
+    if(!habilitado)
+    {
+      controler.value = const TextEditingValue(text:'');
+    }
+
     if (data) {
       inputFormatter = [
         FilteringTextInputFormatter.digitsOnly,
@@ -58,7 +64,7 @@ class CustomTextFieldLinha extends StatelessWidget {
             controller: controler,
             validator: (value) {
               if (data) {
-                if (Utils().dataValida(controler.text)) {
+                if (Utils.dataValida(controler.text)) {
                   return null;
                 } else {
                   return 'Data Inválida';

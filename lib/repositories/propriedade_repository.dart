@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:forms/models/propriedade_model.dart';
-import 'package:forms/Auxiliares/valores.dart';
+import 'package:forms/Auxiliares/Valores.dart';
 
 class PropriedadeRepository {
   final dio = Dio();

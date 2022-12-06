@@ -34,14 +34,16 @@ class RelatorioManejo extends StatelessWidget {
 
   abreManejo(CustomListItem item, BuildContext context) {
     String codigo = item.codigo;
+    print('Tamanho:'+MediaQuery.of(context).size.height.toString());
+    print('width:'+MediaQuery.of(context).size.width.toString());
     showDialog(
       context: context,
       builder: (context) { 
         return Center(
           child: Container(
-          margin: const EdgeInsets.symmetric(vertical: 120.0),
-          //height: MediaQuery.of(context).size.height - 250,
-           width: MediaQuery.of(context).size.width - 80,
+          //margin: const EdgeInsets.symmetric(vertical: 120.0),
+          height: MediaQuery.of(context).size.height - 162,/* 162 é 20% do tamanho total (810) */ 
+           width: MediaQuery.of(context).size.width - 70,
           decoration: const BoxDecoration(
             color: Colors.white,
           ),
@@ -86,7 +88,7 @@ class RelatorioManejo extends StatelessWidget {
                         linha('Tipo Pecuária:', item.pecuaria),
                         linha('Finalidade:', item.finalidade),
                         linha('Tipo E/S:', item.tipoES),
-                        linha('Motivo:', item.propriedade),
+                        linha('Motivo:', item.motivo),
                         linha('Idade:', item.idade),
                         linha('Sexo:', item.sexo),
                         linha('Quantidade:', item.quantidade),

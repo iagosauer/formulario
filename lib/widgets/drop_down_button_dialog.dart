@@ -2,7 +2,7 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:forms/models/finalidade_model.dart';
-import 'package:forms/Auxiliares/valores.dart';
+import 'package:forms/Auxiliares/Valores.dart';
 import 'package:forms/models/usuario_model.dart';
 import '../models/pecuaria_model.dart';
 import '../models/propriedade_model.dart';

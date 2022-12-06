@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:forms/Auxiliares/valores.dart';
+import 'package:forms/Auxiliares/Valores.dart';
 
 // ignore: must_be_immutable
 class CustomTextLabel extends StatelessWidget {

@@ -1,4 +1,4 @@
-import 'package:forms/Auxiliares/valores.dart';
+import 'package:forms/Auxiliares/Valores.dart';
 import '../models/finalidade_model.dart';
 import 'package:dio/dio.dart';
 

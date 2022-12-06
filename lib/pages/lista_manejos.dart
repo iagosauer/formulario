@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:forms/Auxiliares/Utils.dart';
-import 'package:forms/Auxiliares/valores.dart';
+import 'package:forms/Auxiliares/Valores.dart';
 import 'package:forms/models/manejo_recebe_model.dart';
 import 'package:forms/pages/classes/lotties.dart';
 import 'package:forms/pages/classes/manejo_card.dart';
@@ -9,10 +9,13 @@ import 'package:forms/pages/relatorio_manejo.dart';
 import 'package:forms/repositories/manejo_repository.dart';
 import 'package:forms/widgets/menu_appbar.dart';
 
+// ignore: must_be_immutable
 class ListaManejos extends StatefulWidget {
-  const ListaManejos({super.key});
+   ListaManejos({super.key, this.data1, this.data2});
 
   static const String _title = 'Manejos';
+  String? data1;
+  String? data2;
 
   @override
   State<ListaManejos> createState() => _ListaManejosState();
@@ -22,15 +25,34 @@ class _ListaManejosState extends State<ListaManejos> {
   late ValueNotifier<ItensDeMenu> selectedMenu =
       ValueNotifier(ItensDeMenu.controlar);
   late List<CustomListItem> listaCustomItens = <CustomListItem>[];
-  bool carregando = false;
+  bool carregando = true;
   bool erro = false;
   var listaManejo = <ManejoRecebeModel>[];
   final _manejoRepository = ManejoRepository();
 
-  @override
-  initState() {
-    super.initState();
+
+  Future<void> _confereDatasEBusca()
+  async {
+    if((widget.data1 != null) && (widget.data2 !=null))
+    {
+      listaManejo = await _manejoRepository.fetchManejoEntreDatas(widget.data1!, widget.data2!);
+    }
+    else if (widget.data1 != null) 
+    {
+      listaManejo = await _manejoRepository.fetchManejoEntreDatas(widget.data1!, widget.data1!);
+    }else if(widget.data2 != null) {
+      listaManejo = await _manejoRepository.fetchManejoEntreDatas(widget.data2!, widget.data2!);
+    }
+    else {
+      listaManejo = await _manejoRepository.fetchTodosManejos();
+    }
     _buscarDados();
+  }
+
+  @override
+  initState(){
+    super.initState();
+    _confereDatasEBusca();
   }
 
   Future _buscarDados() async {
@@ -38,7 +60,6 @@ class _ListaManejosState extends State<ListaManejos> {
       setState(() {
         carregando = true;
       });
-      listaManejo = await _manejoRepository.fetchTodosManejos();
       for (int i = 0; i < listaManejo.length; i++) {
         String pathImagem = Valor.imagensPecuaria[listaManejo[i].pecuariaModel!.descricao]!;
         listaCustomItens.add(CustomListItem(

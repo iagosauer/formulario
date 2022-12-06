@@ -1,5 +1,5 @@
 // ignore: file_names
-import 'package:forms/Auxiliares/valores.dart';
+import 'package:forms/Auxiliares/Valores.dart';
 import 'package:dio/dio.dart';
 
 class CodigoRepository {

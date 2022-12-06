@@ -4,7 +4,7 @@
 class Utils {
   Utils();
 
-  bool dataValida(String data) {
+  static bool dataValida(String data) {
     try {
       var dia = int.parse('${data[0]}${data[1]}');
       var mes = int.parse('${data[3]}${data[4]}');
@@ -16,13 +16,13 @@ class Utils {
         return false;
       }
     } catch (e) {
-      throw Exception(e);
+      return false;
     }
     return true;
   }
 
   // ignore: non_constant_identifier_names
-  bool MesValida(int mes) {
+  static bool MesValida(int mes) {
     if (0 < mes && mes < 13) {
       return true;
     }
@@ -30,7 +30,7 @@ class Utils {
   }
 
   // ignore: non_constant_identifier_names
-  int QtdDiasMes(int mes, int ano) {
+ static int QtdDiasMes(int mes, int ano) {
     var diasMeses = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
     var qtdDias = diasMeses[mes - 1];
     if ((anoBissexto(ano)) && (mes == 2)) {
@@ -39,7 +39,7 @@ class Utils {
     return qtdDias;
   }
 
-  bool anoBissexto(int ano) {
+  static bool anoBissexto(int ano) {
     return ((ano % 4 == 0) && ((!(ano % 100 == 0)) || (ano % 400 == 0)));
   }
 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/services.dart';
 import 'package:forms/Auxiliares/Utils.dart';
-import 'package:forms/Auxiliares/valores.dart';
+import 'package:forms/Auxiliares/Valores.dart';
 
 // ignore: must_be_immutable
 class CustomTextField extends StatelessWidget {
@@ -63,7 +63,7 @@ class CustomTextField extends StatelessWidget {
             controller: controler,
             validator: (value) {
               if (data) {
-                if (Utils().dataValida(controler.text)) {
+                if (Utils.dataValida(controler.text)) {
                   return null;
                 } else {
                   return 'Data Inválida';
