@@ -1,22 +1,13 @@
-import 'dart:js';
-
 import 'package:flutter/material.dart';
 import 'package:forms/Auxiliares/Utils.dart';
 import 'package:forms/Auxiliares/valores.dart';
-import 'package:forms/models/finalidade_model.dart';
 import 'package:forms/models/manejo_recebe_model.dart';
-import 'package:forms/models/pecuaria_model.dart';
 import 'package:forms/pages/classes/lotties.dart';
 import 'package:forms/pages/classes/manejo_card.dart';
 import 'package:forms/pages/classes/navegacao.dart';
 import 'package:forms/pages/relatorio_manejo.dart';
-import 'package:forms/repositories/finalidade_repository.dart';
 import 'package:forms/repositories/manejo_repository.dart';
-import 'package:forms/repositories/pecuaria_repository.dart';
 import 'package:forms/widgets/menu_appbar.dart';
-import 'package:forms/widgets/text_label_report.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:popup_card/popup_card.dart';
 
 class ListaManejos extends StatefulWidget {
   const ListaManejos({super.key});

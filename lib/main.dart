@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:forms/pages/classes/controladores.dart';
 import 'package:forms/pages/home_page.dart';
-import 'package:provider/provider.dart';
 
 void main() {
   runApp(

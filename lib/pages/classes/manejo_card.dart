@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class ManejoCard extends StatelessWidget {
   const ManejoCard(
-      {required this.title,
+      {super.key, required this.title,
       required this.data,
       required this.propriedade,
       required this.tipoES,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 enum ItensDeMenu {controlar, cadastrar, visualizar}
+// ignore: must_be_immutable
 class MenuAppBar extends StatelessWidget {
   ValueNotifier<ItensDeMenu> selectedMenu;
   MenuAppBar({super.key,

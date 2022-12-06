@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CustomTextFieldLog extends StatelessWidget {
-  CustomTextFieldLog({
+  const CustomTextFieldLog({
     Key? key,
   }) : super(key: key);
 

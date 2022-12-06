@@ -1,8 +1,5 @@
-import 'dart:developer';
-
 import 'package:forms/Auxiliares/valores.dart';
 import '../models/finalidade_model.dart';
-import '../models/pecuaria_model.dart';
 import 'package:dio/dio.dart';
 
 class FinalidadeRepository {

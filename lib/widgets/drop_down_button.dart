@@ -8,6 +8,7 @@ import 'package:forms/models/usuario_model.dart';
 import '../models/pecuaria_model.dart';
 import '../models/propriedade_model.dart';
 
+// ignore: must_be_immutable
 class CustomDropDownButtonForm<T> extends StatelessWidget {
   List<T> list;
   String? labelUp;
@@ -35,7 +36,7 @@ class CustomDropDownButtonForm<T> extends StatelessWidget {
             icon: const Icon(Icons.arrow_downward),
             isExpanded: true,
             decoration: InputDecoration(
-              labelText: labelUp == null ? '' : labelUp,
+              labelText: labelUp ?? '',
               border: const OutlineInputBorder(
                   borderRadius:
                       BorderRadius.all(Radius.circular(Valor.radiusCircular))),

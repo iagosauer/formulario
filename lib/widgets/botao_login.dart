@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:forms/pages/form_manejo.dart';
-import 'package:forms/widgets/janelaDialog.dart';
-
 import '../repositories/usuario.repository.dart';
 
 
@@ -10,7 +8,7 @@ class CustomBotaoLogin extends StatefulWidget {
 
   final ValueNotifier login;
   final TextEditingController senha;
-  CustomBotaoLogin(
+  const CustomBotaoLogin(
       {super.key,
       required this.login,
       required this.senha,});
@@ -65,8 +63,8 @@ class _CustomBotaoLoginState extends State<CustomBotaoLogin> {
                 child: ElevatedButton(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      const Text(
+                    children: const <Widget>[
+                      Text(
                         "Login",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
@@ -75,12 +73,10 @@ class _CustomBotaoLoginState extends State<CustomBotaoLogin> {
                         ),
                         textAlign: TextAlign.left,
                       ),
-                      Container(
-                        child: const SizedBox(
-                          height: 28,
-                          width: 28,
-                          child: Icon(Icons.person),
-                        ),
+                      SizedBox(
+                        height: 28,
+                        width: 28,
+                        child: Icon(Icons.person),
                       )
                     ],
                   ),

@@ -2,14 +2,18 @@
 import 'package:flutter/material.dart';
 import 'package:forms/Auxiliares/valores.dart';
 
+// ignore: must_be_immutable
 class CustomDropDownButtonFormEntradaSaida extends StatefulWidget {
   List<String> list;
   String? labelUp;
   IconData? icon;
   bool habilitado;
   ValueNotifier controler;
+  // ignore: non_constant_identifier_names
   List<String> ListaMotivosEntrada;
+  // ignore: non_constant_identifier_names
   List<String> ListaMotivosSaida;
+  // ignore: non_constant_identifier_names
   List<String> ListaMotivos;
   CustomDropDownButtonFormEntradaSaida(
       {super.key,
@@ -18,8 +22,11 @@ class CustomDropDownButtonFormEntradaSaida extends StatefulWidget {
       this.icon,
       this.habilitado: true,
       required this.controler,
+      // ignore: non_constant_identifier_names
       required this.ListaMotivosEntrada,
+      // ignore: non_constant_identifier_names
       required this.ListaMotivosSaida,
+      // ignore: non_constant_identifier_names
       required this.ListaMotivos});
 
   @override
@@ -42,7 +49,7 @@ class _CustomDropDownButtonFormEntradaSaidaState
             icon: const Icon(Icons.arrow_downward),
             isExpanded: true,
             decoration: InputDecoration(
-              labelText: widget.labelUp == null ? '' : widget.labelUp,
+              labelText: widget.labelUp ?? '',
               border: const OutlineInputBorder(
                   borderRadius:
                       BorderRadius.all(Radius.circular(Valor.radiusCircular))),

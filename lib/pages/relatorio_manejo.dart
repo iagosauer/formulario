@@ -1,13 +1,12 @@
 
 import 'package:flutter/material.dart';
-import 'package:forms/Auxiliares/valores.dart';
 import 'package:forms/pages/classes/lotties.dart';
 import 'package:forms/pages/lista_manejos.dart';
 import 'package:forms/widgets/menu_appbar.dart';
 import 'package:forms/widgets/text_label_report.dart';
-import 'package:provider/provider.dart';
 
 
+// ignore: must_be_immutable
 class RelatorioManejo extends StatelessWidget {
   RelatorioManejo({super.key, required this.item, required this.context});
   BuildContext context;
@@ -40,10 +39,10 @@ class RelatorioManejo extends StatelessWidget {
       builder: (context) { 
         return Center(
           child: Container(
-          margin: new EdgeInsets.symmetric(vertical: 120.0),
+          margin: const EdgeInsets.symmetric(vertical: 120.0),
           //height: MediaQuery.of(context).size.height - 250,
            width: MediaQuery.of(context).size.width - 80,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: Colors.white,
           ),
           child: Padding(
@@ -95,7 +94,7 @@ class RelatorioManejo extends StatelessWidget {
                 ),
               ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Container(
@@ -119,8 +118,8 @@ class RelatorioManejo extends StatelessWidget {
                 child: TextButton(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      const Center(
+                    children: const <Widget>[
+                      Center(
                         child: Text(
                           textDirection: TextDirection.ltr,
                           "SAIR",
@@ -132,12 +131,10 @@ class RelatorioManejo extends StatelessWidget {
                           textAlign: TextAlign.left,
                         ),
                       ),
-                      Container(
-                        child: const SizedBox(
-                          height: 28,
-                          width: 28,
-                          child: Icon(Icons.exit_to_app_rounded),
-                        ),
+                      SizedBox(
+                        height: 28,
+                        width: 28,
+                        child: Icon(Icons.exit_to_app_rounded),
                       )
                     ],
                   ),

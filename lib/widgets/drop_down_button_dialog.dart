@@ -1,6 +1,5 @@
 // ignore_for_file: no_logic_in_create_state
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:forms/models/finalidade_model.dart';
 import 'package:forms/Auxiliares/valores.dart';
@@ -8,6 +7,7 @@ import 'package:forms/models/usuario_model.dart';
 import '../models/pecuaria_model.dart';
 import '../models/propriedade_model.dart';
 
+// ignore: must_be_immutable
 class CustomDropDownButtonDialogForm<T> extends StatelessWidget {
   List<T> list;
   String? labelUp;
@@ -35,7 +35,7 @@ class CustomDropDownButtonDialogForm<T> extends StatelessWidget {
             icon: const Icon(Icons.arrow_downward),
             isExpanded: true,
             decoration: InputDecoration(
-              labelText: labelUp == null ? '' : labelUp,
+              labelText: labelUp ?? '',
               border: const OutlineInputBorder(
                   borderRadius:
                       BorderRadius.all(Radius.circular(Valor.radiusCircular))),

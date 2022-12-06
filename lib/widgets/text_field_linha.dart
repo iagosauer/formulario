@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:forms/Auxiliares/Utils.dart';
 import 'package:forms/Auxiliares/valores.dart';
 
+// ignore: must_be_immutable
 class CustomTextFieldLinha extends StatelessWidget {
   TextEditingController controler;
   String? labelHint;

@@ -1,14 +1,11 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 
 class SwitchApp extends StatelessWidget {
-  SwitchApp({super.key, required this.controlador});
+  const SwitchApp({super.key, required this.controlador});
   final ValueNotifier<bool>  controlador;
 
   @override
   Widget build(BuildContext context) {
-    double comprimento = MediaQuery.of(context).size.width - 100;
     return Row(
           children: [
             SwitchExample(controlador: controlador,),

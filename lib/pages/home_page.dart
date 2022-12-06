@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'form_manejo.dart';
 import 'login.dart';
 
 class MyHomePage extends StatefulWidget {

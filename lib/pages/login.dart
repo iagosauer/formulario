@@ -9,6 +9,7 @@ import '../widgets/text_field_password.dart';
 
 class TelaLogin extends StatefulWidget {
   final String title;
+  // ignore: prefer_const_constructors_in_immutables
   TelaLogin({super.key, required this.title});
 
   @override
@@ -46,6 +47,7 @@ class _TelaLoginState extends State<TelaLogin> {
     }
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: carregando
@@ -55,6 +57,7 @@ class _TelaLoginState extends State<TelaLogin> {
                 : _Sucesso());
   }
 
+  // ignore: non_constant_identifier_names
   SingleChildScrollView _Sucesso() {
     return SingleChildScrollView(
       child: Form(

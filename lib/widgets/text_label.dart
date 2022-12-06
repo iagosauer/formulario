@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:forms/Auxiliares/valores.dart';
 
+// ignore: must_be_immutable
 class CustomTextLabel extends StatelessWidget {
   String texto;
   bool habilitado;

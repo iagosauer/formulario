@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:forms/models/finalidade_model.dart';
 import 'package:forms/models/pecuaria_model.dart';
@@ -17,6 +19,7 @@ import '../widgets/text_label.dart';
 import '../Auxiliares/valores.dart';
 import 'classes/controladores.dart';
 
+// ignore: must_be_immutable
 class FormManejo extends StatefulWidget {
   String title;
 
@@ -60,6 +63,7 @@ class _FormManejoState extends State<FormManejo> {
 
   List<String> ListaSexo = <String>[];
 
+  // ignore: unused_element
   _acoesDeMenu() {
     bool x = true;
     if (controladores.selectedMenu.value == ItensDeMenu.cadastrar) {
@@ -111,7 +115,7 @@ class _FormManejoState extends State<FormManejo> {
     );
   }
 
-  // ignore: non_constant_identifier_names
+
   SingleChildScrollView _Sucesso() {
     return SingleChildScrollView(
       child: Form(

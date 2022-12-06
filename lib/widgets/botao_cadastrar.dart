@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:forms/models/manejo_model.dart';
 import 'package:forms/pages/form_manejo.dart';
-import 'package:forms/pages/home_page.dart';
 import 'package:forms/repositories/codigoManejo_repository.dart';
 import 'package:forms/repositories/manejo_repository.dart';
 import 'package:forms/repositories/saldo_repository.dart';
@@ -12,6 +11,7 @@ import '../models/propriedade_model.dart';
 import '../pages/classes/controladores.dart';
 import 'dialog_propriedades_destino.dart';
 
+// ignore: must_be_immutable
 class CustomBotaoCadastrar extends StatefulWidget {
   Controladores controladores;
   GlobalKey<FormState> formKey;
@@ -113,6 +113,7 @@ class _CustomBotaoCadastrarState extends State<CustomBotaoCadastrar> {
           if ((saldo < manejo.quantidade) &&
               (manejo.tipoOperacao.compareTo('SAÍDA') == 0)) {
             validador = false;
+            // ignore: use_build_context_synchronously
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
                   backgroundColor: Colors.red,
@@ -135,7 +136,9 @@ class _CustomBotaoCadastrarState extends State<CustomBotaoCadastrar> {
                     mensagemFalse: 'Não')
                 .build(context);
             if (valor) {
+              // ignore: use_build_context_synchronously
               if (await _enviarDados(manejo, context)) {
+                // ignore: use_build_context_synchronously
                 context
                     .findAncestorWidgetOfExactType<FormManejo>()
                     ?.createState()

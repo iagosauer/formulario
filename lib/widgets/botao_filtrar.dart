@@ -1,16 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:forms/models/manejo_model.dart';
-import 'package:forms/pages/form_manejo.dart';
 import 'package:forms/pages/lista_manejos.dart';
-import 'package:forms/repositories/codigoManejo_repository.dart';
-import 'package:forms/repositories/manejo_repository.dart';
-import 'package:forms/repositories/saldo_repository.dart';
-import 'package:forms/widgets/janelaDialog.dart';
 import 'package:forms/Auxiliares/valores.dart';
-import 'package:brasil_fields/brasil_fields.dart';
 import '../models/propriedade_model.dart';
-import '../pages/classes/controladores.dart';
-import 'dialog_propriedades_destino.dart';
 
 class CustomBotaoFiltrar extends StatefulWidget {
 
@@ -47,7 +38,7 @@ class _CustomBotaoCadastrarState extends State<CustomBotaoFiltrar> {
         Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) =>  ListaManejos(),
+          builder: (context) =>  const ListaManejos(),
         ),
       );
         },
