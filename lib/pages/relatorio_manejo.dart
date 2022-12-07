@@ -1,5 +1,7 @@
 
 import 'package:flutter/material.dart';
+import 'package:forms/Auxiliares/Valores.dart';
+import 'package:forms/pages/classes/gera_pdf.dart';
 import 'package:forms/pages/classes/lotties.dart';
 import 'package:forms/pages/lista_manejos.dart';
 import 'package:forms/widgets/menu_appbar.dart';
@@ -20,13 +22,17 @@ class RelatorioManejo extends StatelessWidget {
       
   }
 
-  linha(String desc, String valor)
+  linha(String desc, String valor, double altura)
   {
+    double fonte = altura * 0.0217;
     return Row(
       mainAxisAlignment : MainAxisAlignment.start,
       children: [
-        CustomTextLabelReport(texto: desc),
-        CustomTextLabelReport(texto: valor,),
+        CustomTextLabelReport(texto: desc, tamanhoFonte: fonte),
+        CustomTextLabelReport(texto: valor, tamanhoFonte: fonte,),
+        SizedBox(
+          height: altura * 0.04,
+        )
       ],
     );
 
@@ -34,121 +40,170 @@ class RelatorioManejo extends StatelessWidget {
 
   abreManejo(CustomListItem item, BuildContext context) {
     String codigo = item.codigo;
-    print('Tamanho:'+MediaQuery.of(context).size.height.toString());
-    print('width:'+MediaQuery.of(context).size.width.toString());
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+    const shadow = BoxShadow(
+                blurRadius: 10.0,
+                color: Colors.black38,
+                offset: Offset(0.0, 2.0),
+                spreadRadius: 3,
+              );
     showDialog(
       context: context,
       builder: (context) { 
         return Center(
           child: Container(
-          //margin: const EdgeInsets.symmetric(vertical: 120.0),
-          height: MediaQuery.of(context).size.height - 162,/* 162 é 20% do tamanho total (810) */ 
-           width: MediaQuery.of(context).size.width - 70,
-          decoration: const BoxDecoration(
-            color: Colors.white,
-          ),
-          child: Padding(
+            color: Colors.transparent,
             padding: const EdgeInsets.all(10.0),
-            child: Column(children: [
-              Card(
-              color: Colors.blueAccent,
-              child: Row(
-                children: [
-                  Lotties.report(),
-                  Text(
-                    'Manejo: $codigo',
-                    style: const TextStyle(
-                        fontFamily: 'Arial',
-                        color: Colors.white,
-                        fontSize: 34,
-                        fontWeight: FontWeight.bold),
+            child: Column(
+              children: [
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      height: 100,
+                      color: Colors.transparent,
+                      alignment: Alignment.topLeft,
+                    ),
                   ),
-                ],
-              ),
-            ),
-            Container(
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomRight,
-                  colors: <Color>[
-                    Color(0xFF1565C0),
-                    Color(0xFF1976D2),
-                    Color(0xFF1E88E5),
-                    Color(0xFF2196F3),
-                    Color(0xFF42A5F5),
-                ],),
-               ),
-              child: Expanded(
-                child: Column(
-                  children: [
-                        linha('Data:', item.data),
-                        linha('Propriedade:', item.propriedade),
-                        linha('Tipo Pecuária:', item.pecuaria),
-                        linha('Finalidade:', item.finalidade),
-                        linha('Tipo E/S:', item.tipoES),
-                        linha('Motivo:', item.motivo),
-                        linha('Idade:', item.idade),
-                        linha('Sexo:', item.sexo),
-                        linha('Quantidade:', item.quantidade),
-                  ],
+                Container(
+                decoration: const BoxDecoration(
+                  color: Colors.white,
                 ),
-              ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Container(
-              height: 60,
-              alignment: Alignment.centerLeft,
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  stops: [0.3, 1],
-                  colors: [
-                    Color.fromARGB(255, 223, 26, 58),
-                    Color.fromARGB(255, 228, 89, 165),
-                  ],
-                ),
-                  borderRadius: BorderRadius.all(
-                  Radius.circular(5),
-                ),
-              ),
-              child: SizedBox.expand(
-                child: TextButton(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const <Widget>[
-                      Center(
-                        child: Text(
-                          textDirection: TextDirection.ltr,
-                          "SAIR",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            fontSize: 20,
-                          ),
-                          textAlign: TextAlign.left,
-                        ),
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(children: [
+                     Container(
+                      padding: const EdgeInsets.all(5.0),
+                      decoration: const BoxDecoration(
+                          boxShadow: [shadow] ,
+                          borderRadius: BorderRadius.all(Radius.circular(5)),
+                          color: Colors.blueAccent,
                       ),
-                      SizedBox(
-                        height: 28,
-                        width: 28,
-                        child: Icon(Icons.exit_to_app_rounded),
-                      )
-                    ],
+                      child: Row(
+                        children: [
+                          Text(
+                            ' Manejo: $codigo',
+                            style: const TextStyle(
+                                fontFamily: 'Arial',
+                                color: Colors.white,
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Expanded(child: Container(),),                          
+                          Container(
+                            decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                            color: Colors.red,
+                          ),
+                            child: Material(
+                              color: Colors.transparent,
+                              child: IconButton(onPressed: (){
+                                GerarPDF.creatPdf(context, 'Iago', 'Sauer', '30');
+                              }, 
+                              icon: const Icon(Icons.picture_as_pdf, 
+                              color: Colors.white,),),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 10,),
+                  Container(
+                    decoration: const BoxDecoration(
+                      boxShadow: [shadow] ,
+                      borderRadius: BorderRadius.all(Radius.circular(5)),
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomRight,
+                        colors: <Color>[
+                          Color(0xFF1565C0),
+                          Color(0xFF1976D2),
+                          Color(0xFF1E88E5),
+                          Color(0xFF2196F3),
+                          Color(0xFF42A5F5),
+                      ],),
+                     ),
+                    child: Expanded(
+                      child: Column(
+                        children: [
+                              linha('Data:', item.data, height),
+                              linha('Propriedade:', item.propriedade, height),
+                              linha('Tipo Pecuária:', item.pecuaria, height),
+                              linha('Finalidade:', item.finalidade, height),
+                              linha('Tipo E/S:', item.tipoES, height),
+                              linha('Motivo:', item.motivo, height),
+                              linha('Idade:', item.idade, height),
+                              linha('Sexo:', item.sexo, height),
+                              linha('Quantidade:', item.quantidade, height),
+                        ],
+                      ),
+                    ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                    height: (height * 0.072),
+                    alignment: Alignment.centerLeft,
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        stops: [0.3, 1],
+                        colors: [
+                          Color.fromARGB(255, 223, 26, 58),
+                          Color.fromARGB(255, 228, 89, 165),
+                        ],
+                      ),
+                        borderRadius: BorderRadius.all(
+                        Radius.circular(5),
+                      ),
+                    ),
+                    child: SizedBox.expand(
+                      child: TextButton(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: const <Widget>[
+                            Center(
+                              child: Text(
+                                textDirection: TextDirection.ltr,
+                                "SAIR",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                  fontSize: (20),
+                                ),
+                                textAlign: TextAlign.left,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 28,
+                              width: 28,
+                              child: Icon(Icons.exit_to_app_rounded),
+                            )
+                          ],
+                        ),
+                        onPressed: () {
+                         Navigator.pop(context);
+                        },
+                      ),
+                    ),
+                  )
+                  ],
                   ),
-                  onPressed: () {
-                   Navigator.pop(context);
-                  },
                 ),
-              ),
-    )
-            ],),
+                    ),
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      height: 100,
+                      color: Colors.transparent,
+                      alignment: Alignment.topLeft,
+                    ),
+                  )
+              ],
+            ),
           ),
-      ),
         );
       }
     );

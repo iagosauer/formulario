@@ -23,8 +23,8 @@ class Lotties {
     static report() {
     return Lottie.asset(
       'lotties/85408-clip-board.json',
-      height: 70,
-      width: 70,
+      height: 50,
+      width: 50,
       repeat: false,
     );
   }

@@ -5,14 +5,16 @@ import 'package:forms/Auxiliares/Valores.dart';
 class CustomTextLabelReport extends StatelessWidget {
   String texto;
   bool habilitado;
+  double tamanhoFonte;
 
-  CustomTextLabelReport({Key? key, required this.texto, this.habilitado=true}) : super(key: key);
+  CustomTextLabelReport({Key? key, required this.texto, this.habilitado=true, this.tamanhoFonte=18}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(left: 20),
+      margin: const EdgeInsets.only(right: 3),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Text(
             texto,
@@ -20,11 +22,8 @@ class CustomTextLabelReport extends StatelessWidget {
             style: TextStyle(
                 fontFamily: 'Arial',
                 color:  Colors.white,
-                fontSize: 18,
+                fontSize: tamanhoFonte,
                 fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(
-            height: Valor.distancia * 2,
           ),
         ],
       ),

@@ -111,8 +111,6 @@ class _MyStatelessWidgetState extends State<MyStatelessWidget> {
             textDirection: TextDirection.ltr,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-               CustomTextLabel(texto: 'Pesquisar todos os manejos:',
-            habilitado: true,),
               Checkbox(
                 checkColor: Colors.white,
                 value: pesquisaTodos.value,
@@ -123,6 +121,8 @@ class _MyStatelessWidgetState extends State<MyStatelessWidget> {
                   });
       },
     ),
+               CustomTextLabel(texto: 'Pesquisar todos os manejos:',
+            habilitado: true, espacamento: 3,),
             ],
           ),
           CustomBotaoFiltrar(data1: widget.controladores.controlerDataInicial,
