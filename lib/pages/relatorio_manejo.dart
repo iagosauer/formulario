@@ -1,8 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:forms/Auxiliares/Valores.dart';
-import 'package:forms/pages/classes/gera_pdf.dart';
-import 'package:forms/pages/classes/lotties.dart';
 import 'package:forms/pages/lista_manejos.dart';
 import 'package:forms/widgets/menu_appbar.dart';
 import 'package:forms/widgets/text_label_report.dart';
@@ -89,8 +86,8 @@ class RelatorioManejo extends StatelessWidget {
                                 fontSize: 30,
                                 fontWeight: FontWeight.bold),
                           ),
-                          Expanded(child: Container(),),                          
-                          Container(
+                          //Expanded(child: Container(),),                          
+                          /*Container(
                             decoration: const BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(5)),
                             color: Colors.red,
@@ -103,7 +100,7 @@ class RelatorioManejo extends StatelessWidget {
                               icon: const Icon(Icons.picture_as_pdf, 
                               color: Colors.white,),),
                             ),
-                          ),
+                          ),*/
                         ],
                       ),
                     ),
@@ -123,20 +120,18 @@ class RelatorioManejo extends StatelessWidget {
                           Color(0xFF42A5F5),
                       ],),
                      ),
-                    child: Expanded(
-                      child: Column(
-                        children: [
-                              linha('Data:', item.data, height),
-                              linha('Propriedade:', item.propriedade, height),
-                              linha('Tipo Pecuária:', item.pecuaria, height),
-                              linha('Finalidade:', item.finalidade, height),
-                              linha('Tipo E/S:', item.tipoES, height),
-                              linha('Motivo:', item.motivo, height),
-                              linha('Idade:', item.idade, height),
-                              linha('Sexo:', item.sexo, height),
-                              linha('Quantidade:', item.quantidade, height),
-                        ],
-                      ),
+                    child: Column(
+                      children: [
+                            linha('Data:', item.data, height),
+                            linha('Propriedade:', item.propriedade, height),
+                            linha('Tipo Pecuária:', item.pecuaria, height),
+                            linha('Finalidade:', item.finalidade, height),
+                            linha('Tipo E/S:', item.tipoES, height),
+                            linha('Motivo:', item.motivo, height),
+                            linha('Idade:', item.idade, height),
+                            linha('Sexo:', item.sexo, height),
+                            linha('Quantidade:', item.quantidade, height),
+                      ],
                     ),
                     ),
                     const SizedBox(
