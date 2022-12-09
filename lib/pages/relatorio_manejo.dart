@@ -133,7 +133,7 @@ class RelatorioManejo extends StatelessWidget {
                             linha('Quantidade:', item.quantidade, height),
                       ],
                     ),
-                    ),
+                  ),
                     const SizedBox(
                       height: 10,
                     ),

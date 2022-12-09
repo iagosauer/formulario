@@ -5,7 +5,7 @@ import 'package:forms/Auxiliares/Utils.dart';
 import 'package:forms/widgets/menu_appbar.dart';
 import '../../models/propriedade_model.dart';
 
-class Controladores {
+class Controladores extends ChangeNotifier {
   var controlerDate = TextEditingController(text: Utils().DataHoje());
   var controlerFazenda = ValueNotifier<PropriedadeModel>(PropriedadeModel(
     codigo: 0,

@@ -55,6 +55,7 @@ class CustomTextFieldLinha extends StatelessWidget {
           width: MediaQuery.of(context).size.width - 50,
           child: TextFormField(
             inputFormatters: inputFormatter,
+            keyboardType: inteiro ? TextInputType.number : null,
             decoration: InputDecoration(
               labelText: labelHint,
               errorText: mensagemErro == '' ? null : mensagemErro,

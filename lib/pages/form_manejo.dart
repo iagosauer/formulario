@@ -1,5 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:forms/models/finalidade_model.dart';
 import 'package:forms/models/pecuaria_model.dart';
@@ -47,6 +49,9 @@ class _FormManejoState extends State<FormManejo> {
     super.initState();
     controladores.selectedMenu.addListener(
         () => Navegacao(controladores.selectedMenu, context).acoesDeMenu());
+        controladores.controlerTipo.addListener(() { 
+          log(controladores.controlerTipo.value.codigo.toString());
+        });
     controladores.updateScreen.addListener(
       () => _buscarDados(),
     );

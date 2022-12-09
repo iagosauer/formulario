@@ -9,7 +9,7 @@ import '../models/pecuaria_model.dart';
 import '../models/propriedade_model.dart';
 
 // ignore: must_be_immutable
-class CustomDropDownButtonForm<T> extends StatelessWidget {
+class CustomDropDownButtonForm<T> extends StatefulWidget {
   List<T> list;
   String? labelUp;
   IconData? icon;
@@ -24,9 +24,14 @@ class CustomDropDownButtonForm<T> extends StatelessWidget {
       required this.controler});
 
   @override
+  State<CustomDropDownButtonForm<T>> createState() => _CustomDropDownButtonFormState<T>();
+}
+
+class _CustomDropDownButtonFormState<T> extends State<CustomDropDownButtonForm<T>> {
+  @override
   Widget build(BuildContext context) {
-    T dropdownValue = list.first;
-    controler.value = dropdownValue;
+    T dropdownValue = widget.list.first;
+    widget.controler.value = dropdownValue;
     return Row(
       children: [
         SizedBox(
@@ -36,19 +41,22 @@ class CustomDropDownButtonForm<T> extends StatelessWidget {
             icon: const Icon(Icons.arrow_downward),
             isExpanded: true,
             decoration: InputDecoration(
-              labelText: labelUp ?? '',
+              labelText: widget.labelUp ?? '',
               border: const OutlineInputBorder(
                   borderRadius:
                       BorderRadius.all(Radius.circular(Valor.radiusCircular))),
-              prefixIcon: icon == null ? null : Icon(icon),
-              enabled: habilitado,
+              prefixIcon: widget.icon == null ? null : Icon(widget.icon),
+              enabled: widget.habilitado,
             ),
             onChanged: (T? value) {
-              dropdownValue = value!;
-              controler.value = dropdownValue;
-              log(controler.value);
+              setState(() {
+                dropdownValue = value!;
+                widget.controler.value = dropdownValue;
+                
+              });
+
             },
-            items: list.map<DropdownMenuItem<T>>((T value) {
+            items: widget.list.map<DropdownMenuItem<T>>((T value) {
               var texto = '';
               if (value is String) {
                 texto = value;
