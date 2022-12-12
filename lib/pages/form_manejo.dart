@@ -32,7 +32,7 @@ class FormManejo extends StatefulWidget {
 }
 
 class _FormManejoState extends State<FormManejo> {
-  Controladores controladores = Controladores();
+  final controladores = Controladores.getInstance;
   bool carregando = false;
   bool erro = false;
 
@@ -87,7 +87,7 @@ class _FormManejoState extends State<FormManejo> {
       });
     }
     _adcionaValores();
-    _reiniciaControladores();
+    //_reiniciaControladores();
   }
 
   @override
@@ -194,7 +194,7 @@ class _FormManejoState extends State<FormManejo> {
     );
   }
 
-  void _reiniciaControladores() async {
+  /*void _reiniciaControladores() async {
     controladores.controlerDate =
         TextEditingController(text: Utils().DataHoje());
     controladores.controlerFazenda =
@@ -221,7 +221,7 @@ class _FormManejoState extends State<FormManejo> {
     controladores.controlerValidadorIdade = ValueNotifier(true);
     controladores.controlerValidadorQuantidade = ValueNotifier(true);
     controladores.controlerValidadorData = ValueNotifier(true);
-  }
+  }*/
 
   void _adcionaValores() {
     ListaEntradaSaida = <String>['ENTRADA', 'SAÍDA'];

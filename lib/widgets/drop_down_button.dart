@@ -28,10 +28,23 @@ class CustomDropDownButtonForm<T> extends StatefulWidget {
 }
 
 class _CustomDropDownButtonFormState<T> extends State<CustomDropDownButtonForm<T>> {
+ late T dropdownValue;
+  @override
+  void initState() {
+    super.initState();
+    dropdownValue = widget.list.first;
+    widget.controler.value = dropdownValue;
+
+  }
   @override
   Widget build(BuildContext context) {
-    T dropdownValue = widget.list.first;
-    widget.controler.value = dropdownValue;
+
+    if(!widget.list.contains(dropdownValue))
+    {
+      dropdownValue = widget.list.first;
+      widget.controler.value = dropdownValue;
+    }
+
     return Row(
       children: [
         SizedBox(
@@ -51,7 +64,7 @@ class _CustomDropDownButtonFormState<T> extends State<CustomDropDownButtonForm<T
             onChanged: (T? value) {
               setState(() {
                 dropdownValue = value!;
-                widget.controler.value = dropdownValue;
+                widget.controler.value = value;
                 
               });
 
