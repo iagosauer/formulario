@@ -10,27 +10,27 @@ class Controladores {
 
   static Controladores get getInstance => _instance;
 
-  final controlerDate = TextEditingController(text: Utils().DataHoje());
-  final controlerFazenda = ValueNotifier<PropriedadeModel>(PropriedadeModel(
+  var controlerDate = TextEditingController(text: Utils().DataHoje());
+  var controlerFazenda = ValueNotifier<PropriedadeModel>(PropriedadeModel(
     codigo: 0,
     nome: '',
   ),);
-  final controlerTipo = ValueNotifier<PecuariaModel>(PecuariaModel(
+  var controlerTipo = ValueNotifier<PecuariaModel>(PecuariaModel(
     codigo: 0,
     descricao: '',
   ),);
-  final controlerFinalidade =
+  var controlerFinalidade =
       ValueNotifier<FinalidadeModel>(FinalidadeModel(codigo: 0, descricao: ''));
-  final controlerEntradaSaida = ValueNotifier('');
-  final controlerMotivo = ValueNotifier('');
-  final controlerIdade = TextEditingController();
-  final controlerSexo = ValueNotifier('');
-  final controlerQuantidade = TextEditingController();
-  final controlerValidadorIdade = ValueNotifier(true);
-  final controlerValidadorQuantidade = ValueNotifier(true);
-  final controlerValidadorData = ValueNotifier(true);
-  final updateScreen = ValueNotifier(false);
-  final controlerFazendaDestino = ValueNotifier<PropriedadeModel>(PropriedadeModel(
+  var controlerEntradaSaida = ValueNotifier('');
+  var controlerMotivo = ValueNotifier('');
+  var controlerIdade = TextEditingController();
+  var controlerSexo = ValueNotifier('');
+  var controlerQuantidade = TextEditingController();
+  var controlerValidadorIdade = ValueNotifier(true);
+  var controlerValidadorQuantidade = ValueNotifier(true);
+  var controlerValidadorData = ValueNotifier(true);
+  var updateScreen = ValueNotifier(false);
+  var controlerFazendaDestino = ValueNotifier<PropriedadeModel>(PropriedadeModel(
     codigo: 0,
     nome: '',
   ),);

@@ -1,5 +1,3 @@
-// ignore_for_file: no_logic_in_create_state
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:forms/models/finalidade_model.dart';

@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:forms/pages/classes/lotties.dart';
 import 'package:forms/pages/lista_manejos.dart';
 import 'package:forms/widgets/menu_appbar.dart';
 import 'package:forms/widgets/text_label_report.dart';
@@ -78,6 +79,7 @@ class RelatorioManejo extends StatelessWidget {
                       ),
                       child: Row(
                         children: [
+                          Lotties.report(),
                           Text(
                             ' Manejo: $codigo',
                             style: const TextStyle(

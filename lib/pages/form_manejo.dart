@@ -8,7 +8,6 @@ import 'package:forms/models/pecuaria_model.dart';
 import 'package:forms/models/propriedade_model.dart';
 import 'package:forms/pages/classes/lotties.dart';
 import 'package:forms/pages/classes/navegacao.dart';
-import 'package:forms/pages/lista_manejos.dart';
 import 'package:forms/repositories/finalidade_repository.dart';
 import 'package:forms/widgets/menu_appbar.dart';
 import 'package:forms/widgets/text_field.dart';
@@ -53,7 +52,10 @@ class _FormManejoState extends State<FormManejo> {
           log(controladores.controlerTipo.value.codigo.toString());
         });
     controladores.updateScreen.addListener(
-      () => _buscarDados(),
+      () {
+         _buscarDados();
+        _reiniciaControladores();
+        }
     );
     _buscarDados();
   }
@@ -87,7 +89,7 @@ class _FormManejoState extends State<FormManejo> {
       });
     }
     _adcionaValores();
-    //_reiniciaControladores();
+
   }
 
   @override
@@ -194,7 +196,7 @@ class _FormManejoState extends State<FormManejo> {
     );
   }
 
-  /*void _reiniciaControladores() async {
+  void _reiniciaControladores() async {
     controladores.controlerDate =
         TextEditingController(text: Utils().DataHoje());
     controladores.controlerFazenda =
@@ -221,7 +223,7 @@ class _FormManejoState extends State<FormManejo> {
     controladores.controlerValidadorIdade = ValueNotifier(true);
     controladores.controlerValidadorQuantidade = ValueNotifier(true);
     controladores.controlerValidadorData = ValueNotifier(true);
-  }*/
+  }
 
   void _adcionaValores() {
     ListaEntradaSaida = <String>['ENTRADA', 'SAÍDA'];

@@ -22,7 +22,6 @@ class PecuariaRepository {
       final retorno = PecuariaModel.fromMap(response.data);
       return retorno;
     } catch (e) {
-      print(e);
       throw Exception(e);
     }
   }
