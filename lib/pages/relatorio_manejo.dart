@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:forms/pages/classes/gerar_pdf.dart';
 import 'package:forms/pages/classes/lotties.dart';
 import 'package:forms/pages/lista_manejos.dart';
 import 'package:forms/widgets/menu_appbar.dart';
@@ -88,8 +89,8 @@ class RelatorioManejo extends StatelessWidget {
                                 fontSize: 30,
                                 fontWeight: FontWeight.bold),
                           ),
-                          //Expanded(child: Container(),),                          
-                          /*Container(
+                          Expanded(child: Container(),),                          
+                          Container(
                             decoration: const BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(5)),
                             color: Colors.red,
@@ -97,12 +98,12 @@ class RelatorioManejo extends StatelessWidget {
                             child: Material(
                               color: Colors.transparent,
                               child: IconButton(onPressed: (){
-                                GerarPDF.creatPdf(context, 'Iago', 'Sauer', '30');
+                                GerarPDF.createPDF(context);
                               }, 
                               icon: const Icon(Icons.picture_as_pdf, 
                               color: Colors.white,),),
                             ),
-                          ),*/
+                          ),
                         ],
                       ),
                     ),

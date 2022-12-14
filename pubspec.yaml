@@ -41,6 +41,11 @@ dependencies:
   google_fonts: ^3.0.1
   lottie: ^2.0.0
   popup_card: ^0.1.0
+  pdf: ^3.8.4
+  path_provider: ^2.0.11
+  flutter_pdfview: ^1.2.5
+  advance_pdf_viewer: ^2.0.1
+  share_extend: ^2.0.0
 
 dev_dependencies:
   flutter_test:
@@ -79,6 +84,7 @@ flutter:
     - assets/lotties/animalLoading.json
     - assets/lotties/85408-clip-board.json
     - assets/lotties/76436-cow-drink-milk.json
+    - assets/fonts/OpenSans-Regular.ttf
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

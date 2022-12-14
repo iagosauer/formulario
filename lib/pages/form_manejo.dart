@@ -46,11 +46,6 @@ class _FormManejoState extends State<FormManejo> {
   @override
   initState() {
     super.initState();
-    controladores.selectedMenu.addListener(
-        () => Navegacao(controladores.selectedMenu, context).acoesDeMenu());
-        controladores.controlerTipo.addListener(() { 
-          log(controladores.controlerTipo.value.codigo.toString());
-        });
     controladores.updateScreen.addListener(
       () {
          _buscarDados();
