@@ -89,8 +89,8 @@ class RelatorioManejo extends StatelessWidget {
                                 fontSize: 30,
                                 fontWeight: FontWeight.bold),
                           ),
-                          Expanded(child: Container(),),                          
-                          Container(
+                          //Expanded(child: Container(),),                          
+                          /*Container(
                             decoration: const BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(5)),
                             color: Colors.red,
@@ -103,7 +103,7 @@ class RelatorioManejo extends StatelessWidget {
                               icon: const Icon(Icons.picture_as_pdf, 
                               color: Colors.white,),),
                             ),
-                          ),
+                          ),*/
                         ],
                       ),
                     ),
