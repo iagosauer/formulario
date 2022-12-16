@@ -14,44 +14,11 @@ import 'package:share_extend/share_extend.dart';
 
 class GerarPDF {
   static createPDF(BuildContext context, CustomListItem item) async {
-    var data = await rootBundle.load("assets/fonts/OpenSans-Regular.ttf");
-    var myFont = Font.ttf(data);
-    pw.TextStyle fonte = pw.TextStyle(
-      font: myFont,
-    );
-    final pdf = pw.Document();
-    pdf.addPage(
-      pw.Page(
-        build: (pw.Context context) => pw.Container(
-          child: pw.Column(children: [
-            pw.Row(
-              mainAxisAlignment: pw.MainAxisAlignment.center,
-              children: [
-                pw.Text(
-                  'Manejo: ${item.codigo}',
-                  style: pw.TextStyle(
-                    font: myFont,
-                    fontSize: 25,
-                    color: PdfColor.fromHex('#000000'),
-                    fontWeight: FontWeight.bold,
-                  ),
-                )
-              ],
-            ),
-            pw.Expanded(
-                child: pw.Container(
-                    height: 2.0, color: PdfColor.fromHex('#000000')))
-          ]
 
-              /*
-          child: pw.Text('Hello World!', style: fonte),
-          */
-              ),
-        ),
-      ),
-    );
+    final pdf = pw.Document();
+    pdf.addPage(await _pagina(item));
     final String dir = (await getApplicationDocumentsDirectory()).path;
-    String path = '$dir/example.pdf';
+    String path = '$dir/manejo${item.codigo}.pdf';
     final file = File(path);
     await file.writeAsBytes(await pdf.save());
     await file.open(mode: FileMode.read);
@@ -59,15 +26,84 @@ class GerarPDF {
     ShareExtend.share(path, "file",
         sharePanelTitle: "Enviar PDF", subject: "example-pdf");
 
-/*
-    // ignore: use_build_context_synchronously
-    Navigator.push(
-    context,
-    MaterialPageRoute(
-      builder: (context) => ViewPdf(
-        path: path,
-       ),
-    ),
-  );*/
   }
+
+
+  static Future<pw.Page> _pagina (CustomListItem item)
+  async {
+      var data = await rootBundle.load("assets/fonts/OpenSans-Regular.ttf");
+      var myFont = Font.ttf(data);
+      pw.TextStyle fonte = pw.TextStyle(
+        font: myFont,
+      );
+
+      return pw.Page(
+          build: (pw.Context context) => pw.Container(
+            child: pw.Column(children: [
+              pw.Row(
+                mainAxisAlignment: pw.MainAxisAlignment.start,
+                children: [
+                  pw.Text(
+                    'Manejo: ${item.codigo}',
+                    style: pw.TextStyle(
+                      font: myFont,
+                      fontSize: 25,
+                      color: PdfColor.fromHex('#000000'),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  )
+                ],
+              ),
+              pw.Row(
+                mainAxisAlignment: pw.MainAxisAlignment.start,
+                children:[
+                pw.Expanded(
+                  child: pw.Container(
+                      height: 2.0, color: PdfColor.fromHex('#000000'),
+                    ),
+                ),
+              ],
+          ),
+              _linha('Data: ${item.data}', myFont),
+              _linha('Propriedade: ${item.propriedade}', myFont),
+              _linha('Tipo Pecuária: ${item.pecuaria}', myFont),
+              _linha('Finalidade: ${item.finalidade}', myFont),
+              _linha('Tipo E\\S: ${item.tipoES}', myFont),
+              _linha('Motivo: ${item.motivo}', myFont),
+              _linha('Idade: ${item.idade}', myFont),
+              _linha('Sexo: ${item.sexo}', myFont),
+              _linha('Quantidade: ${item.quantidade}', myFont),
+
+            ],
+                ),
+          ),
+        );
+
+  }
+
+  static _linha(String string, Font myFont)
+  {
+
+    return pw.Column(
+    children:[
+    pw.SizedBox(height: 15),
+     pw.Row(
+            children: [ 
+              pw.Text(
+                          string,
+                          style: pw.TextStyle(
+                            font: myFont,
+                            fontSize: 18,
+                            color: PdfColor.fromHex('#000000'),
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ]
+          ),]
+    );
+
+  }
+
+
 }
+

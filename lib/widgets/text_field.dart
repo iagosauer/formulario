@@ -75,7 +75,7 @@ class CustomTextField extends StatelessWidget {
                 return null;
               }
             },
-            keyboardType: number ? TextInputType.number : TextInputType.text,
+            keyboardType: inteiro ? TextInputType.number : null,
           ),
         ),
         const SizedBox(

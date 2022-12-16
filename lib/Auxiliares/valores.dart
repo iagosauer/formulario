@@ -5,7 +5,7 @@ import '../pages/classes/lotties.dart';
 class Valor {
   static const double distancia = 25;
   static const double radiusCircular = 40;
-  static const String baseUrl = 'http://192.168.0.120:9005/v1';
+  static const String baseUrl = 'http://192.168.0.105:9005/v1';
   static const String pathAquicultura = "assets/images/aquicultura.png";
   static const String pathAvicultura = "assets/images/avicultura.png";
   static const String pathBufalina = "assets/images/bufalina.png";
