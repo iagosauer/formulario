@@ -51,7 +51,11 @@ class _TelaLoginState extends State<TelaLogin> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: carregando
-            ? Center(child: Lotties.aminalLoading())
+            ? Center(
+                child: Image.asset(
+                  "assets/portal.png",
+                ),
+              )
             : erro
                 ? Valor.buildErro(context)
                 : _Sucesso());

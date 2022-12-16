@@ -5,7 +5,7 @@ import '../pages/classes/lotties.dart';
 class Valor {
   static const double distancia = 25;
   static const double radiusCircular = 40;
-  static const String baseUrl = 'http://192.168.0.105:9005/v1';
+  static const String baseUrl = 'http://192.168.0.120:9005/v1';
   static const String pathAquicultura = "assets/images/aquicultura.png";
   static const String pathAvicultura = "assets/images/avicultura.png";
   static const String pathBufalina = "assets/images/bufalina.png";
@@ -17,34 +17,30 @@ class Valor {
   static const imagensPecuaria = {
     'AVICULTURA': pathAvicultura,
     'SUÍNA': pathSuina,
-    'OVINA' : pathOvina,
-    'EQUINA' : pathEquina,
-    'BUFALINA' : pathBufalina,
+    'OVINA': pathOvina,
+    'EQUINA': pathEquina,
+    'BUFALINA': pathBufalina,
     'AQUICULTURA': pathAquicultura,
-    'BOVINA' : pathBovino
+    'BOVINA': pathBovino
   };
 
-
-    static buildErro(BuildContext context) {
-    return  Column(
+  static buildErro(BuildContext context) {
+    return Column(
       children: [
         SizedBox(
           height: (MediaQuery.of(context).size.height / 2) - 100,
         ),
         Center(
           child: Lotties.erroInternet(),
+        ),
+        const Text(
+          'Erro ao carregar dados!',
+          style: TextStyle(
+            color: Colors.red,
+            fontWeight: FontWeight.bold,
           ),
-          const Text(
-            'Erro ao carregar dados!',
-            style: TextStyle(
-              color: Colors.red,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+        ),
       ],
     );
-
   }
-
-  
 }
