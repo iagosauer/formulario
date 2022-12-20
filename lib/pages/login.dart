@@ -52,9 +52,7 @@ class _TelaLoginState extends State<TelaLogin> {
     return Scaffold(
         body: carregando
             ? Center(
-                child: Image.asset(
-                  "assets/portal.png",
-                ),
+                child: Lotties.aminalLoading()
               )
             : erro
                 ? Valor.buildErro(context)

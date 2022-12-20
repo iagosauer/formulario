@@ -46,6 +46,7 @@ dependencies:
   flutter_pdfview: ^1.2.5
   advance_pdf_viewer: ^2.0.1
   share_extend: ^2.0.0
+  flutter_dotenv: ^5.0.2
 
 dev_dependencies:
   flutter_test:
@@ -85,6 +86,7 @@ flutter:
     - assets/lotties/85408-clip-board.json
     - assets/lotties/76436-cow-drink-milk.json
     - assets/fonts/OpenSans-Regular.ttf
+    - assets/.env
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

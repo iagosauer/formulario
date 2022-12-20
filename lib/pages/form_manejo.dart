@@ -1,13 +1,10 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:forms/models/finalidade_model.dart';
 import 'package:forms/models/pecuaria_model.dart';
 import 'package:forms/models/propriedade_model.dart';
 import 'package:forms/pages/classes/lotties.dart';
-import 'package:forms/pages/classes/navegacao.dart';
 import 'package:forms/repositories/finalidade_repository.dart';
 import 'package:forms/widgets/menu_appbar.dart';
 import 'package:forms/widgets/text_field.dart';
