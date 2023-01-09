@@ -6,7 +6,7 @@ import '../pages/classes/lotties.dart';
 class Valor {
   static const double distancia = 25;
   static const double radiusCircular = 40;
-  static String baseUrl = dotenv.get('HOST');
+  static String baseUrl = 'http://192.168.0.107:9005/v1'; //dotenv.get('HOST');
   static const String pathAquicultura = "assets/images/aquicultura.png";
   static const String pathAvicultura = "assets/images/avicultura.png";
   static const String pathBufalina = "assets/images/bufalina.png";
